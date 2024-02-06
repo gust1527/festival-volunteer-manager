@@ -1,24 +1,24 @@
+import 'package:festival_volunteer_application/Pages/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title:  const Text("ØF' '24"),
-          backgroundColor: Colors.green[600],
-        ),
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+class MainApp extends StatefulWidget {
+ const MainApp({Key? key}) : super(key: key);
+ 
+ @override
+  _MainAppState createState() => _MainAppState(); 
   }
-}
+  
+  class _MainAppState extends State<MainApp> {
+
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
+      ); 
+    }
+  }
