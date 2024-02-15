@@ -4,7 +4,7 @@ class HalfWidthDialogTile extends StatelessWidget {
   final String title;
   final String content;
 
-  HalfWidthDialogTile({super.key, required this.title, required this.content});
+  const HalfWidthDialogTile({super.key, required this.title, required this.content});
   
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class HalfWidthDialogTile extends StatelessWidget {
       flex: 1,
       child: Dialog(
         child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 Text(

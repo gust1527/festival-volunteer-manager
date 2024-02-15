@@ -4,7 +4,7 @@ class ExpandedDialogTile extends StatelessWidget {
   final String title;
   final String content;
 
-  ExpandedDialogTile({required this.title, required this.content});
+  const ExpandedDialogTile({super.key, required this.title, required this.content});
   
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('ØF 24!', style: TextStyle(color: Colors.white),
       ),
-      backgroundColor: Color(0xFF4C5E49),
+      backgroundColor: const Color(0xFF4C5E49),
       actions: [
         IconButton(
           icon: const Icon(

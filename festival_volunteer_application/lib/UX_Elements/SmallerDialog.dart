@@ -4,14 +4,14 @@ class HalfWidthDialogTile extends StatelessWidget {
   final String title;
   final String content;
 
-  HalfWidthDialogTile({required this.title, required this.content});
+  const HalfWidthDialogTile({super.key, required this.title, required this.content});
   
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.5, // Set the width to half of the screen width
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Text(
