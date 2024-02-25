@@ -1,4 +1,5 @@
 import 'package:festival_volunteer_application/Pages/HomeScreen.dart';
+import 'package:festival_volunteer_application/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,9 +17,10 @@ class MainApp extends StatefulWidget {
 
     @override
     Widget build(BuildContext context) {
-      return const MaterialApp(
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        initialRoute: '/',
+        routes: routes,
       ); 
     }
   }

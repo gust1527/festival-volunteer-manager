@@ -21,12 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             flex: 1,
             child: ExpandedDialogTile(
-                title: 'Bartjans', content: 'Lørdag: 12:00 - 17:00'),
+                title: 'Bartjans', content: 'Lørdag: 12:00 - 17:00', route: '/tjanser',),
           ),
           Expanded(
             flex: 1,
             child: ExpandedDialogTile(
-                title: 'Relevant information', content: 'Volleyball kl. 12:00'),
+                title: 'Relevant information', content: 'Volleyball kl. 12:00', route: '/information',),
           ), 
           Expanded(
             flex: 1,
