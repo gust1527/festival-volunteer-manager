@@ -30,8 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ), 
           Expanded(
             flex: 1,
-            child: HalfWidthDialogTile(
-                title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!'),
+            child: Row(
+              children: <Widget> [
+                Expanded(
+                  child: HalfWidthDialogTile(
+                      title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!'),
+                ),
+                Expanded(child: HalfWidthDialogTile(title: "Madboder", content: "Få noget i mavsen!")),],
+            ),
             ),
         ],
       ),
