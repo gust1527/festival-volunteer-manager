@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -29,14 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ), 
           Expanded(
             flex: 1,
-            child: Row(
-              children: <Widget>[
-                HalfWidthDialogTile(
-                    title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!'),
-                HalfWidthDialogTile(
-                    title: 'Mad og drikke', content: 'Find ud af hvad du kan få at spise og drikke!'),
-              ],
-            ),
+            child: HalfWidthDialogTile(
+                title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!'),
             ),
         ],
       ),
