@@ -17,3 +17,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: OedstedFestival
+      fonts:
+        - asset: lib/fonts/Oedsted_Festival_font.otf

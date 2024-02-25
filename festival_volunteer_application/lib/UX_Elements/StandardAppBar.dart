@@ -17,7 +17,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            showAboutDialog(context: context, applicationName: 'ØF 24!', applicationVersion: '1.0.0', applicationIcon: const Icon(Icons.person), children: const <Widget>[
+            showAboutDialog(context: context, applicationName: 'ØF 24!', applicationVersion: '1.1.0', applicationIcon: const Icon(Icons.person), children: const <Widget>[
               Text('This is the ØF 24! app, a tool for the ØF 24! team to manage their daily tasks and keep track of their progress.'),
             ]);
           },

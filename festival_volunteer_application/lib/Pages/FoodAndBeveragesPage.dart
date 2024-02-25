@@ -17,7 +17,6 @@ class _FoodAndBeveragesState extends State<FoodAndBeveragesPage> {
         return const Scaffold(
             appBar: StandardAppBar(),
             body: Column(
-                
             )
         );
     }
