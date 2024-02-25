@@ -33,10 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: <Widget> [
                 Expanded(
-                  child: HalfWidthDialogTile(
-                      title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!'),
+                  child: ExpandedDialogTile(
+                      title: 'Musikprogram', content: 'Find ud af hvilken dag, der rykker mest for dig!', route: '/music'),
                 ),
-                Expanded(child: HalfWidthDialogTile(title: "Madboder", content: "Få noget i mavsen!")),],
+                Expanded(
+                  child: ExpandedDialogTile(
+                  title: "Madboder", content: "Få noget i mavsen!", route: '/foodAndBeverages')
+                  ),
+                  ],
             ),
             ),
         ],
