@@ -7,12 +7,16 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
-      title: const Text(
-        'ØF 24!',
-        style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'OedstedFestival',),
+      title: const Padding(
+        padding: EdgeInsets.only(top: 18),
+        child: Text(
+          'ØF 24!',
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+              fontSize: 30,
+              fontFamily: 'OedstedFestival',),
+        ),
       ),
       backgroundColor: const Color(0xFF4C5E49),
       actions: [

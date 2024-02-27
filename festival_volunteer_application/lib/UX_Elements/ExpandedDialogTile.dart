@@ -11,6 +11,7 @@ class ExpandedDialogTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[300],
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -27,7 +28,7 @@ class ExpandedDialogTile extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OedstedFestival'
                   ),
