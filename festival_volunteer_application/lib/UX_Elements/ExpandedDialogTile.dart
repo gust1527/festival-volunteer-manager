@@ -22,21 +22,29 @@ class ExpandedDialogTile extends StatelessWidget {
           children: [
             SizedBox(
               width: double.infinity, // Expand to the edge of the screen
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'OedstedFestival'
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, left: 8.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OedstedFestival'
+                  ),
                 ),
               ),
             ),
             SizedBox(
               width: double.infinity,
-              child: Text(
-                content,
-                style: const TextStyle(
-                  fontSize: 16,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  content,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OedstedFestival'
+                  ),
                 ),
               ),
             ),
