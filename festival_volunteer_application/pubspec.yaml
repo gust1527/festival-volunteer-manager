@@ -9,6 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  firebase_auth: ^4.2.1
+  google_sign_in: ^5.2.1
+  sign_in_with_apple: ^3.0.0
+  font_awesome_flutter: ^9.2.0
+  flutter_svg: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -22,4 +27,4 @@ flutter:
       fonts:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
-    - lib/images/
+    - assets/images/festival_logo_image.png

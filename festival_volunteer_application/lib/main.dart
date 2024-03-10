@@ -18,7 +18,7 @@ class MainApp extends StatefulWidget {
     Widget build(BuildContext context) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
+        initialRoute: '/login',
         routes: routes,
       ); 
     }
