@@ -21,3 +21,5 @@ flutter:
     - family: OedstedFestival
       fonts:
         - asset: lib/fonts/Oedsted_Festival_font.otf
+  assets:
+    - lib/images/
