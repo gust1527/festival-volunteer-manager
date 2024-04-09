@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "16043473379",
+    "project_id": "oedsted-festival-app",
+    "storage_bucket": "oedsted-festival-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16043473379:android:763224266eca92cb65c8d6",
+        "android_client_info": {
+          "package_name": "com.example.festival_volunteer_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16043473379-k1oqol4v6lk9hnd69sb91ecf52mdm1fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCr_V6RtjweLqtP9beZGIOrymDMjZWX7wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16043473379-k1oqol4v6lk9hnd69sb91ecf52mdm1fo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "16043473379-0hruvips5uq4a1oi90j5t1935tm5l0lv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.festivalVolunteerApplication.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
