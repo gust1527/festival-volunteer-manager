@@ -11,5 +11,5 @@ var routes = {
     '/information': (context) => const InformationPage(),
     '/music': (context) => const MusicPage(),
     '/tjanser': (context) => const TjansePage(),
-    '/login': (context) => const LoginScreen(),
+    '/login': (context) => LoginScreen(),
   };
