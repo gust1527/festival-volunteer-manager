@@ -1,4 +1,5 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
+import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:festival_volunteer_application/services/auth.dart';
@@ -7,7 +8,7 @@ import 'package:festival_volunteer_application/UX_Elements/LoginButton.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final dbProvider = db_provider();
+  final dbProvider = DBProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Flexible(
-              child: Icon(Icons.golf_course),
+              child: Icon(Icons.festival, size: 400, color: Colors.green),
               //child: Image.asset('assets/images/festival_logo_image.png'),
             ),
             Flexible(
@@ -32,11 +33,21 @@ class LoginScreen extends StatelessWidget {
                     // Once login is successful, get the user from the database
                     AuthService().userStream.listen((user) {
                       if (user != null) {
-                        // Log the user
-                        print(user.uid);
+                        // Get the user
+                        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user.uid);
 
-                        dbProvider.getFestivalGuest(user.uid);
-                        Navigator.pushNamed(context, '/');
+                        festivalGuest.then((snapshot) {
+                            // Get the order ID from the snapshot
+                            bool hasOrderID = snapshot.orderID != 0;
+
+                            if (hasOrderID) {
+                              Navigator.pushNamed(context, '/');
+                            } else {
+                              Navigator.pushNamed(context, '/link-ticket');
+
+                              print(snapshot.orderID);
+                            }
+                        });
                       }
                     });
                   },

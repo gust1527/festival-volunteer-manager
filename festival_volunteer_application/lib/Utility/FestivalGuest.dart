@@ -22,7 +22,7 @@ class FestivalGuest {
       eMail: json['email'],
       firstName: json['first_name'],
       tjans: json['tjans'],
-      orderID: json['order_id'],
+      orderID: json['order_id'] ?? 0,
     );
   }
 

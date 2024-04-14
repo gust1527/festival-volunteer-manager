@@ -5,5 +5,9 @@ abstract class DBProviderInterface {
   
   Future<FestivalGuest> getFestivalGuest(String id);
 
-  Future<void> linkFestivalGuestWithTicket(int orderID, int userID); 
+  Future<void> linkFestivalGuestWithTicket(String orderID, String userID);
+
+  Future<bool> hasTjans(String userID);
+
+  Future<String> getTjans(String userID);
 }

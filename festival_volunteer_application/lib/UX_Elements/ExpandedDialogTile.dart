@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExpandedDialogTile extends StatelessWidget {
-  final String title;
+  final Future<String> title;
   final String content;
   final String route;
 
@@ -26,7 +26,7 @@ class ExpandedDialogTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, left: 8.0),
                 child: Text(
-                  title,
+                  title as String,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
