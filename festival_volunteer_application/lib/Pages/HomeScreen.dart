@@ -1,3 +1,4 @@
+import 'package:festival_volunteer_application/Providers/gcal_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
@@ -17,11 +18,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final DBProvider _db = DBProvider();
   final AuthService _auth = AuthService();
+  final GCAlProvider _gcal = GCAlProvider(calendarId: 'Artister');
+  late final userID;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const StandardAppBar(),
+      appBar: StandardAppBar(),
       body: StreamBuilder<User?>(
         stream: AuthService().userStream,
         builder: (context, snapshot) {
@@ -42,9 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
             // Get the user from the snapshot
             User? user = snapshot.data;
 
-            bool hasUser = user != null;
+            // Get the user ID
+            userID = user!.uid;
 
-            if (hasUser) {
+            // Fetch events from Google Calendar
+            //print(_gcal.getCalendarEvents());
+
+            if (userID != null) {
               // Return a FutureBuilder that listens to the getFestivalGuest method from DBProvider
               return FutureBuilder<FestivalGuest>(
                 future: _db.getFestivalGuest(user.uid),
@@ -66,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Get the festivalGuest from the snapshot
                     FestivalGuest festivalGuest = snapshot.data!;
 
+                    // Return the contents of the homeScreen
                     return Column(
                       children: <Widget>[
                         Expanded(
@@ -76,6 +84,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             route: '/tjanser',
                           ),
                         ),
+                        Expanded(
+                          flex: 1,
+                          child: ExpandedDialogTile(
+                            title: 'Relevant information',
+                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
+                            route: '/information',
+                          ),
+                        ),
+                        Expanded(child: Row(children: <Widget>[
+                          const Expanded(child: ExpandedDialogTile(
+                            title: 'Musik-program',
+                            content: 'Jim Daggerhurtet spiller på scenen kl 14:00. Husk at tjekke programmet for flere informationer!',
+                            route: '/music',
+                          )),
+                          Expanded(child: ExpandedDialogTile(
+                            title: 'Madboder',
+                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
+                            route: '/foodAndBeverages',
+                          )),
+                        ],))
                       ],
                     );
                   } else {

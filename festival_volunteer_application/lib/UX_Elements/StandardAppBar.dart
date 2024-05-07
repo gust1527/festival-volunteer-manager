@@ -1,10 +1,28 @@
+import 'package:festival_volunteer_application/Providers/db_provider.dart';
+import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const StandardAppBar({super.key});
+  final _auth = FirebaseAuth.instance;
+  final _db = DBProvider();
+  late final FestivalGuest festivalGuest;
+  
+  StandardAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Get the current festivalGuest ID
+    String userID = _auth.currentUser!.uid;
+
+    // Get the user
+    Future<FestivalGuest> festivalGuestSnapshot = _db.getFestivalGuest(userID);
+
+    festivalGuestSnapshot.then((snapshot) {
+      // Get the order ID from the snapshot
+      festivalGuest = FestivalGuest.fromJson(snapshot.toJson());
+    });
+
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
       title: const Padding(
@@ -26,15 +44,45 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            showAboutDialog(
-                context: context,
-                applicationName: 'ØF 24!',
-                applicationVersion: '1.1.0',
-                applicationIcon: const Icon(Icons.person),
-                children: const <Widget>[
-                  Text(
-                      'This is the ØF 24! app, a tool for the ØF 24! team to manage their daily tasks and keep track of their progress.'),
-                ]);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  titleTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OedstedFestival',
+                  ),
+                  contentTextStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OedstedFestival',
+                  ),
+                  title: const Center(child: const Text('ØF 24!')),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Navn: ${festivalGuest.firstName}'),
+                      Text('Email: ${festivalGuest.eMail}'),
+                      Text('Ordre-id: ${festivalGuest.orderID}'),
+                      Text('Tjans: ${festivalGuest.tjans}'),
+                      // Add more fields as needed
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      child: const Text('Luk'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           },
         ),
       ],
