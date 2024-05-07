@@ -12,6 +12,25 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Check if the user is already logged in
+    AuthService().userStream.listen((user) {
+      if (user != null) {
+        // Get the user
+        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user.uid);
+
+        festivalGuest.then((snapshot) {
+          // Get the order ID from the snapshot
+          bool hasOrderID = snapshot.orderID != 0;
+
+          if (hasOrderID) {
+            Navigator.pushNamed(context, '/');
+          } else {
+            Navigator.pushNamed(context, '/link-ticket');
+          }
+        });
+      }
+    });
+
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(30),
@@ -29,27 +48,6 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () async {
                     // Sign in with Google asynchronously
                     await AuthService().googleLogin();
-
-                    // Once login is successful, get the user from the database
-                    AuthService().userStream.listen((user) {
-                      if (user != null) {
-                        // Get the user
-                        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user.uid);
-
-                        festivalGuest.then((snapshot) {
-                            // Get the order ID from the snapshot
-                            bool hasOrderID = snapshot.orderID != 0;
-
-                            if (hasOrderID) {
-                              Navigator.pushNamed(context, '/');
-                            } else {
-                              Navigator.pushNamed(context, '/link-ticket');
-
-                              print(snapshot.orderID);
-                            }
-                        });
-                      }
-                    });
                   },
                   icon: const Icon(FontAwesomeIcons.google),
                   label: const Text("Login with Google"),

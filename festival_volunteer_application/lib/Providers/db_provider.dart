@@ -8,16 +8,22 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
+  Stream<QuerySnapshot<Object?>> getFestivalGuestStream() {
+    try {
+      // Get the festivalGuest collection from the firestore database
+      return _db.collection('festival_guests').snapshots();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<FestivalGuest> getFestivalGuest(String id) {
     try {
-
       // Get the festivalGuest collection from the firestore database
       return _db.collection('festival_guests').doc(id).get().then((doc) {
         // named boolean variable to check if the document exists
         final bool docExists = doc.exists;
-
-        // Print the document data
-        print(doc.data());
 
         if (docExists) {
           return FestivalGuest.fromJson(doc.data() as Map<String, dynamic>);
@@ -26,7 +32,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
           throw Exception('FestivalGuest not found');
         }
       });
-
     } catch (error) {
       throw error;
     }
@@ -45,7 +50,7 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       throw error;
     }
   }
-  
+
   @override
   Future<bool> hasTjans(String userID) {
     try {
@@ -62,8 +67,8 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       });
     } catch (error) {
       throw error;
+    }
   }
-}
 
   @override
   Future<String> getTjans(String userID) {
@@ -79,6 +84,16 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
           throw Exception('Tjans for user not found');
         }
       });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @override
+  Stream<QuerySnapshot<Object?>> getFestivalGuestsStream() {
+    try {
+      // Get the festivalGuest collection from the firestore database
+      return _db.collection('festival_guests').snapshots();
     } catch (error) {
       throw error;
     }

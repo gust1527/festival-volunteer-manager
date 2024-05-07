@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExpandedDialogTile extends StatelessWidget {
-  final Future<String> title;
+  final String title;
   final String content;
   final String route;
 
