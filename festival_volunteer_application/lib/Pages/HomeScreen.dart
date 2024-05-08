@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             User? user = snapshot.data;
 
             // Get the user ID
-            userID = user!.uid;
+            String userID = user!.uid;
 
             // Fetch events from Google Calendar
             //print(_gcal.getCalendarEvents());

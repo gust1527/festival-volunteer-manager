@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ExpandedDialogTile extends StatelessWidget {
   final String title;
@@ -10,6 +11,8 @@ class ExpandedDialogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var fonts = GoogleFonts();
+
     return Card(
       color: Colors.grey[300],
       margin: const EdgeInsets.all(20),
@@ -26,11 +29,11 @@ class ExpandedDialogTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, left: 8.0),
                 child: Text(
-                  title as String,
+                  title,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'OedstedFestival'
+                    fontFamily: 'OedstedFestival',
                   ),
                 ),
               ),
@@ -44,7 +47,7 @@ class ExpandedDialogTile extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'OedstedFestival'
+                    fontFamily: 'Arial',
                   ),
                 ),
               ),
