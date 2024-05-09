@@ -11,7 +11,7 @@ class Tjans {
     required this.tjanseDate,
   });
 
-  factory Tjans.fromJson(Map<String, dynamic> json) {
+  factory Tjans.fromJson(dynamic json) {
     return Tjans(
       tjanseName: json['tjanseName'],
       tjanseDescription: json['tjanseDescription'],
