@@ -1,22 +1,39 @@
+import 'dart:convert';
+
 class Tjans {
-  final String tjanseName;
-  final String tjanseDescription;
-  final String tjanseLocation;
-  final DateTime tjanseDate;
+  final String email;
+  final List<String> navn;
+  final List<String> tjanseNavn;
+  final List<String> tjanseBeskrivelse;
+  final List<String> tjansePlacering;
+  final List<String> tjanseTidspunkt;
 
   Tjans({
-    required this.tjanseName,
-    required this.tjanseDescription,
-    required this.tjanseLocation,
-    required this.tjanseDate,
+    required this.email,
+    required this.navn,
+    required this.tjanseNavn,
+    required this.tjanseBeskrivelse,
+    required this.tjansePlacering,
+    required this.tjanseTidspunkt,
   });
 
   factory Tjans.fromJson(dynamic json) {
+    try {
+      json = jsonDecode(json);
+    } catch (e) {
+      throw Exception('Failed to decode JSON');
+    }
+
     return Tjans(
-      tjanseName: json['tjanseName'],
-      tjanseDescription: json['tjanseDescription'],
-      tjanseLocation: json['tjanseLocation'],
-      tjanseDate: json['tjanseDate'],
+      email: json.keys.first,
+      navn: List<String>.from(json.values.first['navn']),
+      tjanseNavn: List<String>.from(json.values.first['tjanse_navn']),
+      tjanseBeskrivelse:
+          List<String>.from(json.values.first['tjanse_beskrivelse']),
+      tjansePlacering:
+          List<String>.from(json.values.first['tjanse-placering']),
+      tjanseTidspunkt:
+          List<String>.from(json.values.first['tjanse_tidspunkt']),
     );
-  } 
+  }
 }
