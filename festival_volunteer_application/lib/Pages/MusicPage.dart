@@ -12,9 +12,9 @@ class _MusicPageState extends State<MusicPage> {
 
     @override
     Widget build(BuildContext context) {
-        return const Scaffold(
+        return Scaffold(
             appBar: StandardAppBar(),
-            body: Column(
+            body: const Column(
                 
             )
         );

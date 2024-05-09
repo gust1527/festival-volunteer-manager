@@ -1,5 +1,6 @@
 import 'package:festival_volunteer_application/Pages/FoodAndBeveragesPage.dart';
 import 'package:festival_volunteer_application/Pages/HomeScreen.dart';
+import 'package:festival_volunteer_application/Pages/LinkTicket.dart';
 import 'package:festival_volunteer_application/Pages/LoginScreen.dart';
 import 'package:festival_volunteer_application/Pages/MusicPage.dart';
 import 'package:festival_volunteer_application/Pages/TjansePage.dart';
@@ -12,4 +13,5 @@ var routes = {
     '/music': (context) => const MusicPage(),
     '/tjanser': (context) => const TjansePage(),
     '/login': (context) => LoginScreen(),
+    '/link-ticket': (context) => LinkTicketPage(),
   };
