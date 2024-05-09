@@ -7,7 +7,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   final _auth = FirebaseAuth.instance;
   final _db = DBProvider();
   late final FestivalGuest festivalGuest;
-  
+
   StandardAppBar({super.key});
 
   @override
@@ -30,10 +30,11 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(
           'ØF 24!',
           style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.normal,
-              fontSize: 30,
-              fontFamily: 'OedstedFestival',),
+            color: Colors.white,
+            fontWeight: FontWeight.normal,
+            fontSize: 30,
+            fontFamily: 'OedstedFestival',
+          ),
         ),
       ),
       backgroundColor: const Color(0xFF4C5E49),
@@ -73,6 +74,13 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                   actions: [
+                    TextButton(
+                      child: const Text('Log ud'),
+                      onPressed: () {
+                        _auth.signOut();
+                        Navigator.of(context).pushNamed('/login');
+                      },
+                    ),
                     TextButton(
                       child: const Text('Luk'),
                       onPressed: () {

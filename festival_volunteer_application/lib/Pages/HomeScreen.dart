@@ -79,8 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           flex: 1,
                           child: ExpandedDialogTile(
-                            title: festivalGuest.tjans,
-                            content: 'Yo yo yo! Velkommen til "Tjanse-siden"! Herunder vil du finde information omkring din tjans.',
+                            title: 'Din tjans',
+                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
                             route: '/tjanser',
                           ),
                         ),
