@@ -28,7 +28,7 @@ class _TjansePageState extends State<TjansePage> {
     Future<FestivalGuest> festivalGuest = _db.getFestivalGuest(user!.uid);
 
     // Define local variable to tjans
-    Future<Tjans> guestTjans;
+    Future<List<Tjans>> guestTjanser;
 
     return FutureBuilder<FestivalGuest>(
       future: festivalGuest,
@@ -45,7 +45,7 @@ class _TjansePageState extends State<TjansePage> {
 
           // Make a HTTP request to the backend to get the user
           try {
-            guestTjans = _http_provider.getGuestTjans(guestEmail);
+            guestTjanser = _http_provider.getGuestTjanser(guestEmail);
           } catch (e) {
             // Handle the exception and return a default value
             rethrow;
@@ -53,8 +53,8 @@ class _TjansePageState extends State<TjansePage> {
 
           return Scaffold(
             appBar: StandardAppBar(),
-            body: FutureBuilder<Tjans>(
-              future: guestTjans,
+            body: FutureBuilder<List<Tjans>>(
+              future: guestTjanser,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -65,14 +65,15 @@ class _TjansePageState extends State<TjansePage> {
                 } else {
                   return Column(
                     children: List.generate(
-                      snapshot.data!.tjanseNavn.length,
+                      snapshot.data!.length,
                       (index) => Expanded(
                         flex: 1,
                         child: TjansTile(
-                          tjanseNavn: snapshot.data!.tjanseNavn[index],
-                          tjanseBeskrivelse: snapshot.data!.tjanseBeskrivelse[index],
-                          tjanseTidspunkt: snapshot.data!.tjanseTidspunkt[index],
-                          tjansePlacering: snapshot.data!.tjansePlacering[index],
+                          tjanseNavn: snapshot.data![index].tjanseNavn,
+                          tjanseKortBeskrivelse: snapshot.data![index].tjanseKortBeskrivelse,
+                          tjanseLangBeskrivelse: snapshot.data![index].tjanseLangBeskrivelse,
+                          tjanseTidspunkt: snapshot.data![index].tjanseTidspunkt,
+                          tjansePlacering: snapshot.data![index].tjansePlacering,
                           route: '/tjanser',
                         ),
                       ),

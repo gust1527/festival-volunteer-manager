@@ -1,9 +1,11 @@
+import 'package:festival_volunteer_application/UX_Elements/TjansDescriptionPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TjansTile extends StatelessWidget {
   final String tjanseNavn;
-  final String tjanseBeskrivelse;
+  final String tjanseKortBeskrivelse;
+  final Map<String, dynamic> tjanseLangBeskrivelse;
   final String tjansePlacering;
   final String tjanseTidspunkt;
   final String route;
@@ -11,7 +13,8 @@ class TjansTile extends StatelessWidget {
   const TjansTile({
     Key? key,
     required this.tjanseNavn,
-    required this.tjanseBeskrivelse,
+    required this.tjanseKortBeskrivelse,
+    required this.tjanseLangBeskrivelse,
     required this.tjansePlacering,
     required this.tjanseTidspunkt,
     required this.route,
@@ -24,9 +27,14 @@ class TjansTile extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => {
-          Navigator.pushNamed(context, route)
-        },
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TjansDescriptionPage(jsonData: tjanseLangBeskrivelse,),
+              ),
+            );
+          },
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -62,7 +70,7 @@ class TjansTile extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: tjanseBeskrivelse,
+                        text: tjanseKortBeskrivelse,
                         style: const TextStyle(
                           fontFamily: 'Arial',
                         ),
