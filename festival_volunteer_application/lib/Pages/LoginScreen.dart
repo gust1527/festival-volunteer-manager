@@ -15,6 +15,8 @@ class LoginScreen extends StatelessWidget {
     // Check if the user is already logged in
     AuthService().userStream.listen((user) {
       if (user != null) {
+        // Print the user.uid
+        print('UserID: ${user.uid}');
         // Get the user
         Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user.uid);
 
@@ -23,7 +25,7 @@ class LoginScreen extends StatelessWidget {
           bool hasOrderID = snapshot.orderID != 0;
 
           if (hasOrderID) {
-            Navigator.pushNamed(context, '/');
+            Navigator.pushReplacementNamed(context, '/');
           } else {
             Navigator.pushNamed(context, '/link-ticket');
           }
@@ -39,7 +41,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Flexible(
-              child: Icon(Icons.festival, size: 400, color: Colors.green),
+              child: Image(image: AssetImage('assets/images/app_icon.png')),
               //child: Image.asset('assets/images/festival_logo_image.png'),
             ),
             Flexible(

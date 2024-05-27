@@ -11,12 +11,12 @@ dependencies:
     sdk: flutter
   firebase_auth: ^4.2.1
   google_sign_in: ^5.2.1
-  sign_in_with_apple: ^3.0.0
   font_awesome_flutter: ^9.2.0
   flutter_svg: ^2.0.1
   firebase_core: ^2.29.0
   cloud_firestore: ^4.16.1
   google_fonts: ^6.2.1
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -30,4 +30,22 @@ flutter:
       fonts:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
-    - assets/images/festival_logo_image.png
+    - assets/images/app_icon.png
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/app_icon.png"
+    background_color: "#4C5E49"
+    theme_color: "#4C5E49"
+  windows:
+    generate: true
+    image_path: "assets/images/app_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/app_icon.png"
