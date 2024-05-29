@@ -1,9 +1,9 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
+import 'package:festival_volunteer_application/UX_Elements/LoginButton.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:festival_volunteer_application/services/auth.dart';
-import 'package:festival_volunteer_application/UX_Elements/LoginButton.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -17,8 +17,10 @@ class LoginScreen extends StatelessWidget {
       if (user != null) {
         // Print the user.uid
         print('UserID: ${user.uid}');
+        print('User email: ${user.email}');
+        print('User display name: ${user.displayName}');
         // Get the user
-        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user.uid);
+        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user);
 
         festivalGuest.then((snapshot) {
           // Get the order ID from the snapshot
@@ -45,15 +47,11 @@ class LoginScreen extends StatelessWidget {
               //child: Image.asset('assets/images/festival_logo_image.png'),
             ),
             Flexible(
-              child: SizedBox(
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    // Sign in with Google asynchronously
-                    await AuthService().googleLogin();
-                  },
-                  icon: const Icon(FontAwesomeIcons.google),
-                  label: const Text("Login with Google"),
-                ),
+              child: LoginButton(
+                text: 'Log ind med Google',
+                icon: FontAwesomeIcons.google,
+                color: Colors.red,
+                loginMethod: AuthService().googleLogin,
               ),
             ),
             const Flexible(

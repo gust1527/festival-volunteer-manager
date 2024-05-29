@@ -12,11 +12,11 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current festivalGuest ID
-    String userID = _auth.currentUser!.uid;
+    // Get the current festivalGuest
+    User? currentUser = _auth.currentUser!;
 
     // Get the user
-    Future<FestivalGuest> festivalGuestSnapshot = _db.getFestivalGuest(userID);
+    Future<FestivalGuest> festivalGuestSnapshot = _db.getFestivalGuest(currentUser);
 
     festivalGuestSnapshot.then((snapshot) {
       // Get the order ID from the snapshot

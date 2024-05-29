@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class DBProviderInterface {
 
@@ -9,5 +10,7 @@ abstract class DBProviderInterface {
 
   Future<String> getTjans(String userID);
 
-  Future<FestivalGuest> getFestivalGuest(String id);
+  Future<FestivalGuest> getFestivalGuest(User? user);
+
+  Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name);
 }

@@ -25,7 +25,7 @@ class _TjansePageState extends State<TjansePage> {
     final User? user = AuthService().user;
 
     // Get the user from the DB
-    Future<FestivalGuest> festivalGuest = _db.getFestivalGuest(user!.uid);
+    Future<FestivalGuest> festivalGuest = _db.getFestivalGuest(user);
 
     // Define local variable to tjans
     Future<List<Tjans>> guestTjanser;

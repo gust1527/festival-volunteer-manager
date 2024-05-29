@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival_volunteer_application/Providers/Interfaces/db_provider_interface.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class DBProvider with ChangeNotifier implements DBProviderInterface {
@@ -8,22 +9,31 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
-  Future<FestivalGuest> getFestivalGuest(String id) {
+  Future<FestivalGuest> getFestivalGuest(User? user) async {
     try {
       // Get the festivalGuest collection from the firestore database
-      return _db.collection('festival_guests').doc(id).get().then((doc) {
-        // named boolean variable to check if the document exists
-        final bool docExists = doc.exists;
+      final snapshot = await _db.collection('festival_guests').where('email', isEqualTo: user?.email).get();
+      
+      // Check if any documents were found
+      if (snapshot.docs.isNotEmpty) {
+        // Get the first document from the snapshot
+        final doc = snapshot.docs.first;
 
-        if (docExists) {
-          return FestivalGuest.fromJson(doc.data() as Map<String, dynamic>);
-        } else {
-          // If the document does not exist, throw an error
-          throw Exception('FestivalGuest not found');
-        }
-      });
+        print(doc.data());
+        // Create a new FestivalGuest object from the document
+        final FestivalGuest festivalGuest = FestivalGuest(
+          id: doc.data()['id'],
+          eMail: doc.data()['email'],
+          firstName: doc.data()['first_name'],
+          tjans: doc.data()['tjans'],
+          orderID: doc.data()['order_id'],
+        );
+        return festivalGuest;
+      } else {
+        throw Exception('No festival guest found for the user');
+      }
     } catch (error) {
-      throw error;
+      throw Exception('Could not get festival guest: $error');
     }
   }
 
@@ -37,7 +47,7 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
         notifyListeners();
       });
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -56,7 +66,7 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
         }
       });
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
@@ -75,7 +85,13 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
         }
       });
     } catch (error) {
-      throw error;
+      rethrow;
     }
+  }
+  
+  @override
+  Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name) {
+    // TODO: implement createNewFestivalGuest
+    throw UnimplementedError();
   }
 }

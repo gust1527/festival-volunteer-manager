@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final DBProvider _db = DBProvider();
   final AuthService _auth = AuthService();
   final GCAlProvider _gcal = GCAlProvider(calendarId: 'Artister');
-  late final userID;
+  late final User? user;
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +45,13 @@ class _HomeScreenState extends State<HomeScreen> {
             // Get the user from the snapshot
             User? user = snapshot.data;
 
-            // Get the user ID
-            String userID = user!.uid;
-
             // Fetch events from Google Calendar
             //print(_gcal.getCalendarEvents());
 
-            if (userID != null) {
+            if (user != null) {
               // Return a FutureBuilder that listens to the getFestivalGuest method from DBProvider
               return FutureBuilder<FestivalGuest>(
-                future: _db.getFestivalGuest(user.uid),
+                future: _db.getFestivalGuest(user),
                 builder: (BuildContext context, AsyncSnapshot<FestivalGuest> snapshot) {
                   // Check the state of the snapshot
                   bool isLoading = snapshot.connectionState == ConnectionState.waiting;
