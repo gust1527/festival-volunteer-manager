@@ -19,7 +19,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
         // Get the first document from the snapshot
         final doc = snapshot.docs.first;
 
-        print(doc.data());
         // Create a new FestivalGuest object from the document
         final FestivalGuest festivalGuest = FestivalGuest(
           id: doc.data()['id'],

@@ -2,7 +2,7 @@ import 'package:festival_volunteer_application/Providers/gcal_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
-import 'package:festival_volunteer_application/Services/auth.dart';
+import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:festival_volunteer_application/UX_Elements/ExpandedDialogTile.dart';
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Expanded(child: Row(children: <Widget>[
                           const Expanded(child: ExpandedDialogTile(
-                            title: 'Musik-program',
+                            title: 'Musik program',
                             content: 'Jim Daggerhurtet spiller på scenen kl 14:00. Husk at tjekke programmet for flere informationer!',
                             route: '/music',
                           )),

@@ -1,5 +1,5 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
-import 'package:festival_volunteer_application/Services/auth.dart';
+import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:flutter/material.dart';
 
 class LinkTicketPage extends StatelessWidget {

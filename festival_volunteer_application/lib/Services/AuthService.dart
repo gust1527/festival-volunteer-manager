@@ -13,6 +13,8 @@ class AuthService {
     clientId: "16043473379-k1oqol4v6lk9hnd69sb91ecf52mdm1fo.apps.googleusercontent.com",
   );
 
+  get currentUser => null;
+
   // sign out
   Future<void> signOut() async {
     await _auth.signOut();

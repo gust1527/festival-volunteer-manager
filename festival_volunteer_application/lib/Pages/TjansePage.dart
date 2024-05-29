@@ -5,7 +5,7 @@ import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:festival_volunteer_application/Utility/Tjans.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:festival_volunteer_application/Services/auth.dart';
+import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:festival_volunteer_application/Providers/htttp_provider.dart';
 
 class TjansePage extends StatefulWidget {

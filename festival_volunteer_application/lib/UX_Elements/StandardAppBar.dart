@@ -1,10 +1,11 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
+import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final _auth = FirebaseAuth.instance;
+  final _auth = AuthService();
   final _db = DBProvider();
   late final FestivalGuest festivalGuest;
 
@@ -13,7 +14,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     // Get the current festivalGuest
-    User? currentUser = _auth.currentUser!;
+    User? currentUser = _auth.user!;
 
     // Get the user
     Future<FestivalGuest> festivalGuestSnapshot = _db.getFestivalGuest(currentUser);

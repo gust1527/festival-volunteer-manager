@@ -3,7 +3,7 @@ import 'package:festival_volunteer_application/UX_Elements/LoginButton.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:festival_volunteer_application/services/auth.dart';
+import 'package:festival_volunteer_application/services/AuthService.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
           bool hasOrderID = snapshot.orderID != 0;
 
           if (hasOrderID) {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
           } else {
             Navigator.pushNamed(context, '/link-ticket');
           }
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
               child: LoginButton(
                 text: 'Log ind med Google',
                 icon: FontAwesomeIcons.google,
-                color: Colors.red,
+                color: Colors.grey,
                 loginMethod: AuthService().googleLogin,
               ),
             ),
