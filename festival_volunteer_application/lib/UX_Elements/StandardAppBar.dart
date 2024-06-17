@@ -62,7 +62,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OedstedFestival',
                   ),
-                  title: const Center(child: const Text('ØF 24!')),
+                  title: const Center(child: const Text('ØF 24')),
                   content: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
