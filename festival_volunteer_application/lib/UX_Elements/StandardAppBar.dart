@@ -27,9 +27,9 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
       title: const Padding(
-        padding: EdgeInsets.only(top: 18),
+        padding: EdgeInsets.only(left: 10, top: 40),
         child: Text(
-          'ØF 24!',
+          'ØF 24',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.normal,
@@ -62,7 +62,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'OedstedFestival',
                   ),
-                  title: const Center(child: const Text('ØF 24')),
+                  title: const Center(child: Text('ØF 24!')),
                   content: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -71,7 +71,6 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Text('Email: ${festivalGuest.eMail}'),
                       Text('Ordre-id: ${festivalGuest.orderID}'),
                       Text('Tjans: ${festivalGuest.tjans}'),
-                      // Add more fields as needed
                     ],
                   ),
                   actions: [
