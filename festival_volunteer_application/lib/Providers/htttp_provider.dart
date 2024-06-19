@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class HttpProvider {
-  String urlEndPoint = 'https://script.google.com/macros/s/AKfycbzEpLCHdcjMmnzy3Jz_9vKOcWCygQVSpTVrzwuWuNsppvk4uqC5njOnJK_JmoKWysZ3/exec?email=';
+  String urlEndPoint = 'https://script.google.com/macros/s/AKfycbwNW2toOZ83RWS_-nxMWkNg02Dl_eP87OlQxUCjexoa7tPyx88dzS-NEVD9GWe47TA/exec?email=';
 
   Future<List<Tjans>> getGuestTjanser(email) async {
     // Make an HTTP GET request
