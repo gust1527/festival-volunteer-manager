@@ -71,7 +71,8 @@ class _TjansePageState extends State<TjansePage> {
                         child: TjansTile(
                           tjanseNavn: snapshot.data![index].tjanseNavn,
                           tjanseKortBeskrivelse: snapshot.data![index].tjanseKortBeskrivelse,
-                          tjanseLangBeskrivelse: snapshot.data![index].tjanseLangBeskrivelse,
+                          //tjanseLangBeskrivelse: snapshot.data![index].tjanseLangBeskrivelse,
+                          tjanseLangBeskrivelse: {},
                           tjanseTidspunkt: snapshot.data![index].tjanseTidspunkt,
                           tjansePlacering: snapshot.data![index].tjansePlacering,
                           route: '/tjanser',
