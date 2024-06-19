@@ -5,7 +5,7 @@ class FestivalGuest {
     final String id;
     final String eMail;
     final String firstName;
-    final String tjans;
+    final Future<List<Tjans>> tjans;
     final int orderID;
 
     FestivalGuest({

@@ -22,7 +22,7 @@ class _TjansePageState extends State<TjansePage> {
   @override
   Widget build(BuildContext context) {
     // Get the authenticated user
-    final User? user = AuthService().user;
+    final User user = AuthService().user!;
 
     // Get the user from the DB
     Future<FestivalGuest> festivalGuest = _db.getFestivalGuest(user);

@@ -10,7 +10,7 @@ abstract class DBProviderInterface {
 
   Future<String> getTjans(String userID);
 
-  Future<FestivalGuest> getFestivalGuest(User? user);
+  Future<FestivalGuest> getFestivalGuest(User user);
 
   Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name);
 }
