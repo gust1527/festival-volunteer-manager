@@ -7,6 +7,7 @@ import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:festival_volunteer_application/Utility/Tjans.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:festival_volunteer_application/Services/AuthService.dart';
+import 'package:intl/intl.dart';
 
 class TjansePage extends StatefulWidget {
   const TjansePage({Key? key}) : super(key: key);
@@ -40,12 +41,18 @@ class _TjansePageState extends State<TjansePage> {
                   return const Center(child: CircularProgressIndicator());
                 } else {
                   Tjans tjans = snapshot.requireData;
+
+                  // Convert the timestamp from Tjans to usable date format
+                  DateTime dateTime = snapshot.requireData.time.toDate();
+
+                  String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime);
+
                   return TjansTile(
                     tjanseNavn: tjans.name,
                     tjanseKortBeskrivelse: tjans.shortDescription,
                     tjanseLangBeskrivelse: {},
                     tjansePlacering: tjans.location,
-                    tjanseTidspunkt: tjans.time.toString(),
+                    tjanseTidspunkt: formattedTime,
                     route: "/tjanser",
                   );
                 }
