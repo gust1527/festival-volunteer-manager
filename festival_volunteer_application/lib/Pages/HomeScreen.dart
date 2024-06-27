@@ -9,6 +9,7 @@ import 'package:festival_volunteer_application/UX_Elements/ExpandedDialogTile.da
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 import '../Utility/Tjans.dart';
 
@@ -58,11 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     if(!snapshot.hasData) {
                       return Center(child: Text(snapshot.toString()));
                     } else {
+                      DateTime dateTime = snapshot.requireData.time.toDate();
+
+                      String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime);
                       return Expanded(
                           flex: 1,
                           child: ExpandedDialogTile(
                             title: 'Din tjans',
-                            content: 'Du har fået tjansen ${snapshot.requireData.name}, som indebærer ${snapshot.requireData.shortDescription}. Du skal møde til tjansen kl ${snapshot.requireData.time}',
+                            content: 'Du har fået tjansen "${snapshot.requireData.name}", som indebærer at "${snapshot.requireData.shortDescription}". Du skal møde til tjansen "$formattedTime"',
                             route: '/tjanser',
                           )
                       );

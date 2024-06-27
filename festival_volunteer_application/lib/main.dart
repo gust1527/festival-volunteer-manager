@@ -2,6 +2,7 @@ import 'package:festival_volunteer_application/routes.dart';
 import 'package:festival_volunteer_application/tests.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -9,6 +10,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  initializeDateFormatting('da_DK');
   runApp(const MainApp());
 }
 
