@@ -23,12 +23,12 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       if (snapshot.exists) {
         // Extract data from the document
         final docData = snapshot.data()!;
-        print("HER1${docData['tjanser'].toString()}");
         // Fetch details for all tjanser
-        (docData['tjanser'] as List).forEach((element) {print("path is ${element.path}");});
+        for (var element in docData['tjanser']) {
+          print("path is ${element.path}");
+        }
         final List<Future<Tjans>> tjanser =
             (docData['tjanser'] as List).map((tjansPath) => _getTjansDetails(tjansPath.path)).toList();
-        print("HER2${tjanser}");
 
         final festivalGuest = FestivalGuest(
           eMail: email,
@@ -45,22 +45,46 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
     }
   }
 
-// Helper function to get Tjans details
-  Future<Tjans> _getTjansDetails(dynamic tjansPath) async {
+  // Helper function to get Tjans details
+  Future<Tjans> _getTjansDetails(String tjansPath) async {
     final tjansDoc = await _db.doc(tjansPath).get();
     if (tjansDoc.exists) {
+      // Get the tjans data from the snapshot
       final tjansData = tjansDoc.data()!;
+
+      // Initialize variable for storing the 'long tjanse description'
+      final String tjanseLangBeskrivelse;
+
+      // Print the tjans data
+      print("Tjans data: $tjansData");
+
+      // Get the path to the long description of the tjans
+      final String tjansLongDescriptionPath = tjansData['long_description'].path;
+
+      // Get th
+      final tjanseLangBeskrivelseDoc = await _db.doc(tjansLongDescriptionPath).get();
+
+      if(tjanseLangBeskrivelseDoc.exists) {
+        // Initialize TjansLangBeskrivelse object
+        tjanseLangBeskrivelse = tjanseLangBeskrivelseDoc.data()!['description'];
+
+        print(tjanseLangBeskrivelse);
+      } else {
+        tjanseLangBeskrivelse = 'No description';
+      }
+
       return Tjans(
           tjansData['name'],
-          DateTime.parse(tjansData['time']),
+          (tjansData['time']),
           tjansData['location'],
           tjansData['short_description'],
-          TjansLangBeskrivelse(tjansData['long_description']) // Assuming long_description is stored as a path
+          TjansLangBeskrivelse(tjanseLangBeskrivelse), // Assuming long_description is stored as a path
       );
     } else {
       throw Exception('Tjans details not found');
     }
   }
+
   @override
   Future<void> linkFestivalGuestWithTicket(String orderID, String userId) {
     try {

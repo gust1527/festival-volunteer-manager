@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival_volunteer_application/Utility/TjansLangBeskrivelse.dart';
 
 class Tjans {
   final String name;
-  final DateTime time;
+  final Timestamp time;
   final String location;
   final String shortDescription;
   final TjansLangBeskrivelse longDescription;

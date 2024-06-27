@@ -50,16 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
             // Get the user from the snapshot
             User? user = snapshot.data;
 
-            // Fetch events from Google Calendar
-            //print(_gcal.getCalendarEvents());
-
             if (user != null) {
               // Return a FutureBuilder that listens to the getFestivalGuest method from DBProvider
               return Column(
                 children: <Widget>[
                   FutureBuilder(future: guestTjans, builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
                     if(!snapshot.hasData) {
-                      return CircularProgressIndicator();
+                      return Center(child: Text(snapshot.toString()));
                     } else {
                       return Expanded(
                           flex: 1,
@@ -68,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             content: 'Du har fået tjansen ${snapshot.requireData.name}, som indebærer ${snapshot.requireData.shortDescription}. Du skal møde til tjansen kl ${snapshot.requireData.time}',
                             route: '/tjanser',
                           )
-
                       );
                     }
                   }),

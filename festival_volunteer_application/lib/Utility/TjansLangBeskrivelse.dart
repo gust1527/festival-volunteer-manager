@@ -1,6 +1,6 @@
 class TjansLangBeskrivelse {
 
-  Map<String, dynamic> description;
+  String description;
 
   TjansLangBeskrivelse(this.description);
 }

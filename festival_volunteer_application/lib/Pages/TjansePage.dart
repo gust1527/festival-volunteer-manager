@@ -27,27 +27,33 @@ class _TjansePageState extends State<TjansePage> {
     // Define local variable to tjans
     Future<List<Tjans>> guestTjanser;
 
-    return Column(
-      children: List.generate(tjanser.length,
-              (index) {
-                return Expanded(flex: 1, child: FutureBuilder(future: tjanser[index],
-                    builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
-                      if(!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        Tjans tjans = snapshot.requireData;
-                        return TjansTile(
-                            tjanseNavn: tjans.name,
-                            tjanseKortBeskrivelse: tjans.shortDescription,
-                            tjanseLangBeskrivelse: {},
-                            tjansePlacering: tjans.location,
-                            tjanseTidspunkt: tjans.time.toString(),
-                            route: "/tjanser");
-                      }
-                    }
-                ));
-              }),
+    return Scaffold(
+      appBar: StandardAppBar(),
+      body: Column(
+        children: List.generate(tjanser.length, (index) {
+          return Expanded(
+            flex: 1,
+            child: FutureBuilder(
+              future: tjanser[index],
+              builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  Tjans tjans = snapshot.requireData;
+                  return TjansTile(
+                    tjanseNavn: tjans.name,
+                    tjanseKortBeskrivelse: tjans.shortDescription,
+                    tjanseLangBeskrivelse: {},
+                    tjansePlacering: tjans.location,
+                    tjanseTidspunkt: tjans.time.toString(),
+                    route: "/tjanser",
+                  );
+                }
+              },
+            ),
+          );
+        }),
+      ),
     );
-
   }
 }
