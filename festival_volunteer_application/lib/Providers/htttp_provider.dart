@@ -84,6 +84,4 @@ class HttpProvider implements HttpHandler {
 
     }
   }
-
-
 }

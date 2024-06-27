@@ -51,6 +51,8 @@ class _TjansePageState extends State<TjansePage> {
             rethrow;
           }
 
+          try {
+
           return Scaffold(
             appBar: StandardAppBar(),
             body: FutureBuilder<List<Tjans>>(
@@ -63,6 +65,7 @@ class _TjansePageState extends State<TjansePage> {
                   return Text(
                       'Error: ${snapshot.error}'); // Show error message if something went wrong
                 } else {
+                  
                   return Column(
                     children: List.generate(
                       snapshot.data!.length,
@@ -83,7 +86,11 @@ class _TjansePageState extends State<TjansePage> {
                 }
               },
             ),
-          );
+          ); 
+          } catch (error) {
+            print('Error: ${StackTrace.current}');
+            return Text('Error: ${error}');
+          }
         }
       },
     );
