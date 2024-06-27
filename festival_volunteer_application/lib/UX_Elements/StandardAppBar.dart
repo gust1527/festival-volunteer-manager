@@ -70,7 +70,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Text('Navn: ${festivalGuest.firstName}'),
                       Text('Email: ${festivalGuest.eMail}'),
                       Text('Ordre-id: ${festivalGuest.orderID}'),
-                      Text('Tjans: ${festivalGuest.tjans}'),
+                      Text('Tjans: ${festivalGuest.tjanser}'),
                     ],
                   ),
                   actions: [

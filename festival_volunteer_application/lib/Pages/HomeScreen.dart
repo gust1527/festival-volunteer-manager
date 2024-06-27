@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:festival_volunteer_application/Providers/gcal_provider.dart';
+import 'package:festival_volunteer_application/Utility/UserHandler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
@@ -7,6 +9,8 @@ import 'package:festival_volunteer_application/UX_Elements/ExpandedDialogTile.da
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:flutter/widgets.dart';
+
+import '../Utility/Tjans.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -42,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text("Error: ${snapshot.error}"),
             );
           } else if (isLoggedIn) {
+            Future<Tjans> guestTjans = UserHandler().user!.tjanser[0];
             // Get the user from the snapshot
             User? user = snapshot.data;
 
@@ -50,6 +55,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
             if (user != null) {
               // Return a FutureBuilder that listens to the getFestivalGuest method from DBProvider
+              return Column(
+                children: <Widget>[
+                  FutureBuilder(future: guestTjans, builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
+                    if(!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return Expanded(
+                          flex: 1,
+                          child: ExpandedDialogTile(
+                            title: 'Din tjans',
+                            content: 'Du har fået tjansen ${snapshot.requireData.name}, som indebærer ${snapshot.requireData.shortDescription}. Du skal møde til tjansen kl ${snapshot.requireData.time}',
+                            route: '/tjanser',
+                          )
+
+                      );
+                    }
+                  }),
+                  Expanded(
+                    flex: 1,
+                    child: ExpandedDialogTile(
+                      title: 'Relevant information',
+                      content: 'Du har fået tjansen TODO, som indebærer . Du skal møde til tjansen kl ',
+                      route: '/information',
+                    ),
+                  ),
+                  Expanded(child: Row(children: <Widget>[
+                    const Expanded(child: ExpandedDialogTile(
+                      title: 'Musik program',
+                      content: 'Jim Daggerhurtet spiller på scenen kl 14:00. Husk at tjekke programmet for flere informationer!',
+                      route: '/music',
+                    )),
+                    Expanded(child: ExpandedDialogTile(
+                      title: 'Madboder',
+                      content: 'Du har fået tjansen , som indebærer . Du skal møde til tjansen kl ',
+                      route: '/foodAndBeverages',
+                    )),
+                  ],))
+                ],
+              );
+              /*
               return FutureBuilder<FestivalGuest>(
                 future: _db.getFestivalGuest(user),
                 builder: (BuildContext context, AsyncSnapshot<FestivalGuest> snapshot) {
@@ -71,43 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     FestivalGuest festivalGuest = snapshot.data!;
 
                     // Return the contents of the homeScreen
-                    return Column(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: ExpandedDialogTile(
-                            title: 'Din tjans',
-                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
-                            route: '/tjanser',
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: ExpandedDialogTile(
-                            title: 'Relevant information',
-                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
-                            route: '/information',
-                          ),
-                        ),
-                        Expanded(child: Row(children: <Widget>[
-                          const Expanded(child: ExpandedDialogTile(
-                            title: 'Musik program',
-                            content: 'Jim Daggerhurtet spiller på scenen kl 14:00. Husk at tjekke programmet for flere informationer!',
-                            route: '/music',
-                          )),
-                          Expanded(child: ExpandedDialogTile(
-                            title: 'Madboder',
-                            content: 'Du har fået tjansen ${festivalGuest.tjans}, som indebærer ${festivalGuest.tjans}. Du skal møde til tjansen kl ${festivalGuest.tjans}',
-                            route: '/foodAndBeverages',
-                          )),
-                        ],))
-                      ],
-                    );
+                        ;
                   } else {
                     return Container(); // Placeholder widget
                   }
                 },
               );
+              */
             } else {
               return const Center(
                 child: Text("User not logged in!"),

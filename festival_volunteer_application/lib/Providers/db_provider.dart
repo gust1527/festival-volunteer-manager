@@ -3,35 +3,38 @@ import 'package:festival_volunteer_application/Providers/Interfaces/db_provider_
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:festival_volunteer_application/Providers/htttp_provider.dart';
 
 import '../Utility/Tjans.dart';
+import '../Utility/TjansLangBeskrivelse.dart';
 
 class DBProvider with ChangeNotifier implements DBProviderInterface {
   // Get Firestore instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+
   @override
   Future<FestivalGuest> getFestivalGuest(User user) async {
     String email = user.email!;
     try {
-      // Get the festivalGuest collection from the firestore database
-      final snapshot = await _db.collection('festival_guests').where('email', isEqualTo: email).get();
-      
-      // Check if any documents were found
-      if (snapshot.docs.isNotEmpty) {
-        // Get the first document from the snapshot
-        final doc = snapshot.docs.first;
-        HttpProvider provider = HttpProvider();
-        Future<List<Tjans>> tjanser = provider.hurtigTjanseInfo(email);
-        HttpProvider().updateTjansWithLangBeskrivelse(email);
-        // Create a new FestivalGuest object from the document
-        final FestivalGuest festivalGuest = FestivalGuest(
-          id: doc.data()['id'],
-          eMail: doc.data()['email'],
-          firstName: doc.data()['first_name'],
-          tjans: tjanser,
-          orderID: doc.data()['order_id'],
+      // Get the festivalGuests collection from the Firestore database
+      final snapshot = await _db.collection('festival_guests').doc(email).get();
+
+      // Check if the document was found
+      if (snapshot.exists) {
+        // Extract data from the document
+        final docData = snapshot.data()!;
+        print("HER1${docData['tjanser'].toString()}");
+        // Fetch details for all tjanser
+        (docData['tjanser'] as List).forEach((element) {print("path is ${element.path}");});
+        final List<Future<Tjans>> tjanser =
+            (docData['tjanser'] as List).map((tjansPath) => _getTjansDetails(tjansPath.path)).toList();
+        print("HER2${tjanser}");
+
+        final festivalGuest = FestivalGuest(
+          eMail: email,
+          firstName: docData['full_name'],
+          tjanser: tjanser, // Fetching details for the first tjanse
+          orderID: docData['order_id'],
         );
         return festivalGuest;
       } else {
@@ -42,6 +45,22 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
     }
   }
 
+// Helper function to get Tjans details
+  Future<Tjans> _getTjansDetails(dynamic tjansPath) async {
+    final tjansDoc = await _db.doc(tjansPath).get();
+    if (tjansDoc.exists) {
+      final tjansData = tjansDoc.data()!;
+      return Tjans(
+          tjansData['name'],
+          DateTime.parse(tjansData['time']),
+          tjansData['location'],
+          tjansData['short_description'],
+          TjansLangBeskrivelse(tjansData['long_description']) // Assuming long_description is stored as a path
+      );
+    } else {
+      throw Exception('Tjans details not found');
+    }
+  }
   @override
   Future<void> linkFestivalGuestWithTicket(String orderID, String userId) {
     try {
@@ -56,44 +75,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
     }
   }
 
-  @override
-  Future<bool> hasTjans(String userID) {
-    try {
-      // Get the festivalGuest collection from the firestore database
-      return _db.collection('festival_guests').doc(userID).get().then((doc) {
-        // named boolean variable to check if the document exists
-        final bool docExists = doc.exists;
-        if (docExists) {
-          return doc.data()!['tjans'] != null;
-        } else {
-          // If the document does not exist, throw an error
-          throw Exception('Tjans for user not found');
-        }
-      });
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<String> getTjans(String userID) {
-    try {
-      // Get the festivalGuest collection from the firestore database
-      return _db.collection('festival_guests').doc(userID).get().then((doc) {
-        // named boolean variable to check if the document exists
-        final bool docExists = doc.exists;
-        if (docExists) {
-          return doc.data()!['tjans'];
-        } else {
-          // If the document does not exist, throw an error
-          throw Exception('Tjans for user not found');
-        }
-      });
-    } catch (error) {
-      rethrow;
-    }
-  }
-  
   @override
   Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name) {
     // TODO: implement createNewFestivalGuest

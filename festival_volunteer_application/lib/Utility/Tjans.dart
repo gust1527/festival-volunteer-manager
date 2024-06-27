@@ -1,5 +1,21 @@
 import 'dart:convert';
 
+import 'package:festival_volunteer_application/Utility/TjansLangBeskrivelse.dart';
+
+class Tjans {
+  final String name;
+  final DateTime time;
+  final String location;
+  final String shortDescription;
+  final TjansLangBeskrivelse longDescription;
+
+  Tjans(this.name, this.time, this.location,
+      this.shortDescription, this.longDescription);
+
+
+}
+
+/*
 class Tjans {
   final String email;
   final String navn;
@@ -51,3 +67,5 @@ class Tjans {
     print('Lang beskrivelse: $tjanseLangBeskrivelse');
   }
 }
+
+ */

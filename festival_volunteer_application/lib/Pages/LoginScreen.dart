@@ -23,11 +23,10 @@ class LoginScreen extends StatelessWidget {
         print('User display name: ${user.displayName}');
         // Get the user
         Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user);
-        festivalGuest.then((snapshot) {
-          UserHandler().user = snapshot;
+        festivalGuest.then((currentUserSnapshot) {
+          UserHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
-          bool hasOrderID = snapshot.orderID != 0;
-
+          bool hasOrderID = currentUserSnapshot.orderID != 0;
           if (hasOrderID) {
             Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
           } else {
