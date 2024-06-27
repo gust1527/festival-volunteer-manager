@@ -23,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final DBProvider _db = DBProvider();
   final AuthService _auth = AuthService();
-  final GCAlProvider _gcal = GCAlProvider(calendarId: 'Artister');
   late final User? user;
 
   @override
