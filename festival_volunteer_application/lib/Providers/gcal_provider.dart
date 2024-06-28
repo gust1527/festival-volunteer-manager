@@ -9,15 +9,14 @@ class GCALProvider {
   late ServiceAccountCredentials _credentials;
   AuthClient? _client;
 
-  GCALProvider() {
-    _loadCredentials();
-  }
+  GCALProvider();
 
-  Future<void> _loadCredentials() async {
+  Future<void> loadCredentials() async {
     // Load the service account credentials from the JSON file
-    String jsonString = await rootBundle.loadString('assets/oedsted-festival-app-c03db84e9bf2.json');
+    String jsonString = await rootBundle.loadString('oedsted-festival-app-74186dc80a46.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     _credentials = ServiceAccountCredentials.fromJson(jsonMap);
+    await _authenticate();
   }
 
   Future<void> _authenticate() async {
@@ -26,7 +25,7 @@ class GCALProvider {
 
   Future<List<calendar.Event>> getFutureEvents(String calendarId) async {
     if (_client == null) {
-      await _authenticate();
+      throw Exception("Client not authenticated");
     }
 
     var calendarApi = calendar.CalendarApi(_client!);
@@ -37,6 +36,8 @@ class GCALProvider {
       singleEvents: true,
       orderBy: 'startTime',
     );
+
+    print(eventList.items);
 
     return eventList.items ?? [];
   }

@@ -23,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthService _auth = AuthService();
   final _gcalProvider = GCALProvider();
   User? user;
-  late Future<List<calendar.Event>> _relevantEvents;
-  late Future<List<calendar.Event>> _musicEvents;
-  late Future<Tjans> guestTjans;
+  Future<List<calendar.Event>>? _relevantEvents;
+  Future<List<calendar.Event>>? _musicEvents;
+  Future<Tjans>? guestTjans;
 
   @override
   void initState() {
@@ -39,10 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
           guestTjans = UserHandler().user!.tjanser[0];
 
           // Initialize calendar events fetching
-          _relevantEvents = _gcalProvider.getFutureEvents('8e87aa9e93550d69001740ad7e4d8a7f85e7ded096626424c8494a8da9e7ea68@group.calendar.google.com');
-          _musicEvents = _gcalProvider.getFutureEvents('o8et2jfhroob27aoa5op6dud2k@group.calendar.google.com');
+          _initializeCalendarEvents();
         }
       });
+    });
+  }
+
+  Future<void> _initializeCalendarEvents() async {
+    await _gcalProvider.loadCredentials();
+    setState(() {
+      _relevantEvents = _gcalProvider.getFutureEvents('8e87aa9e93550d69001740ad7e4d8a7f85e7ded096626424c8494a8da9e7ea68@group.calendar.google.com');
+      _musicEvents = _gcalProvider.getFutureEvents('o8et2jfhroob27aoa5op6dud2k@group.calendar.google.com');
     });
   }
 
@@ -86,11 +93,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
+                      // Fetch the first event from the list
+                      calendar.Event firstEvent = snapshot.data!.first;
+
+                      // Fetch the start time of the first event
+                      DateTime startTime = firstEvent.start!.dateTime!.toLocal();
+                      String formattedTime = DateFormat('HH:mm').format(startTime);
+
+                      // Fetch the summary of the first event
+                      String summary = firstEvent.summary ?? 'Ingen kommende begivenheder';
                       return Expanded(
                           flex: 1,
                           child: ExpandedDialogTile(
                             title: 'Relevant information',
-                            content: snapshot.data!.isNotEmpty ? 'Næste begivenhed: ${snapshot.data!.first.summary}' : 'Ingen kommend begivenheder',
+                            content: snapshot.data!.isNotEmpty ? 'Næste begivenhed: $summary @ $formattedTime' : 'Ingen kommende begivenheder',
                             route: '/information',
                           ));
                     }
@@ -102,13 +118,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
+                      // Fetch the first event from the list
+                      calendar.Event firstMusicEvent = snapshot.data!.first;
+
+                      // Fetch the start time of the first event
+                      DateTime startTime = firstMusicEvent.start!.dateTime!.toLocal();
+                      String formattedTime = DateFormat('HH:mm').format(startTime);
+
+                      // Fetch the summary of the first event
+                      String summary = firstMusicEvent.summary ?? 'Ingen kommende artister';
                       return Expanded(
                           child: Row(
                         children: <Widget>[
                           Expanded(
                               child: ExpandedDialogTile(
                             title: 'Musik program',
-                            content: snapshot.data!.isNotEmpty ? 'Næste artist: ${snapshot.data!.first.summary}' : 'Ingen kommende artister',
+                            content: snapshot.data!.isNotEmpty ? 'Næste artist: $summary @ $formattedTime' : 'Ingen kommende artister',
                             route: '/music',
                           )),
                           Expanded(
