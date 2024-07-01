@@ -1,11 +1,28 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:festival_volunteer_application/Utility/TjansLangBeskrivelse.dart';
+
+class Tjans {
+  final String name;
+  final Timestamp time;
+  final String location;
+  final String shortDescription;
+  final TjansLangBeskrivelse longDescription;
+
+  Tjans(this.name, this.time, this.location,
+      this.shortDescription, this.longDescription);
+
+
+}
+
+/*
 class Tjans {
   final String email;
   final String navn;
   final String tjanseNavn;
   final String tjanseKortBeskrivelse;
-  final Map<String, dynamic> tjanseLangBeskrivelse;
+  Future<Map<String, dynamic>> tjanseLangBeskrivelse;
   final String tjansePlacering;
   final String tjanseTidspunkt;
 
@@ -40,6 +57,9 @@ class Tjans {
     );
   }
 
+  void giveLangBeskrivelse(Future<Map<String, dynamic>> langBeskrivelse) {
+    this.tjanseLangBeskrivelse = langBeskrivelse;
+  }
   void printTjans() {
     print('Tjans: $tjanseNavn');
     print('Beskrivelse: $tjanseKortBeskrivelse');
@@ -48,3 +68,5 @@ class Tjans {
     print('Lang beskrivelse: $tjanseLangBeskrivelse');
   }
 }
+
+ */

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:festival_volunteer_application/services/AuthService.dart';
 
+import '../Utility/UserHandler.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
@@ -21,11 +23,10 @@ class LoginScreen extends StatelessWidget {
         print('User display name: ${user.displayName}');
         // Get the user
         Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user);
-
-        festivalGuest.then((snapshot) {
+        festivalGuest.then((currentUserSnapshot) {
+          UserHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
-          bool hasOrderID = snapshot.orderID != 0;
-
+          bool hasOrderID = currentUserSnapshot.orderID != 0;
           if (hasOrderID) {
             Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
           } else {

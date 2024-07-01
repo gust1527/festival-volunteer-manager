@@ -1,3 +1,4 @@
+import 'package:festival_volunteer_application/Utility/UserHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/UX_Elements/TjansTile.dart';
@@ -6,7 +7,7 @@ import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 import 'package:festival_volunteer_application/Utility/Tjans.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:festival_volunteer_application/Services/AuthService.dart';
-import 'package:festival_volunteer_application/Providers/htttp_provider.dart';
+import 'package:intl/intl.dart';
 
 class TjansePage extends StatefulWidget {
   const TjansePage({Key? key}) : super(key: key);
@@ -17,74 +18,49 @@ class TjansePage extends StatefulWidget {
 
 class _TjansePageState extends State<TjansePage> {
   late final _db = DBProvider();
-  late final _http_provider = HttpProvider();
 
   @override
   Widget build(BuildContext context) {
     // Get the authenticated user
-    final User? user = AuthService().user;
-
     // Get the user from the DB
-    Future<FestivalGuest> festivalGuest = _db.getFestivalGuest(user);
+    List<Future<Tjans>> tjanser = UserHandler().user!.tjanser;
 
     // Define local variable to tjans
     Future<List<Tjans>> guestTjanser;
 
-    return FutureBuilder<FestivalGuest>(
-      future: festivalGuest,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-              child: CircularProgressIndicator()); // Show a loading spinner while waiting
-        } else if (snapshot.hasError) {
-          return Text(
-              'Error: ${snapshot.error}'); // Show error message if something went wrong
-        } else {
-          // Get the user email
-          String guestEmail = snapshot.data!.eMail;
-
-          // Make a HTTP request to the backend to get the user
-          try {
-            guestTjanser = _http_provider.getGuestTjanser(guestEmail);
-          } catch (e) {
-            // Handle the exception and return a default value
-            rethrow;
-          }
-
-          return Scaffold(
-            appBar: StandardAppBar(),
-            body: FutureBuilder<List<Tjans>>(
-              future: guestTjanser,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child: CircularProgressIndicator()); // Show a loading spinner while waiting
-                } else if (snapshot.hasError) {
-                  return Text(
-                      'Error: ${snapshot.error}'); // Show error message if something went wrong
+    return Scaffold(
+      appBar: StandardAppBar(),
+      body: Column(
+        children: List.generate(tjanser.length, (index) {
+          return Expanded(
+            flex: 1,
+            child: FutureBuilder(
+              future: tjanser[index],
+              builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
                 } else {
-                  return Column(
-                    children: List.generate(
-                      snapshot.data!.length,
-                      (index) => Expanded(
-                        flex: 1,
-                        child: TjansTile(
-                          tjanseNavn: snapshot.data![index].tjanseNavn,
-                          tjanseKortBeskrivelse: snapshot.data![index].tjanseKortBeskrivelse,
-                          tjanseLangBeskrivelse: snapshot.data![index].tjanseLangBeskrivelse,
-                          tjanseTidspunkt: snapshot.data![index].tjanseTidspunkt,
-                          tjansePlacering: snapshot.data![index].tjansePlacering,
-                          route: '/tjanser',
-                        ),
-                      ),
-                    ),
+                  Tjans tjans = snapshot.requireData;
+
+                  // Convert the timestamp from Tjans to usable date format
+                  DateTime dateTime = snapshot.requireData.time.toDate();
+
+                  String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime);
+
+                  return TjansTile(
+                    tjanseNavn: tjans.name,
+                    tjanseKortBeskrivelse: tjans.shortDescription,
+                    tjanseLangBeskrivelse: {},
+                    tjansePlacering: tjans.location,
+                    tjanseTidspunkt: formattedTime,
+                    route: "/tjanser",
                   );
                 }
               },
             ),
           );
-        }
-      },
+        }),
+      ),
     );
   }
 }

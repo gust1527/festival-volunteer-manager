@@ -17,6 +17,11 @@ dependencies:
   cloud_firestore: ^4.16.1
   google_fonts: ^6.2.1
   flutter_launcher_icons: ^0.13.1
+  intl: ^0.19.0
+  url_launcher: ^6.3.0
+  googleapis_auth: ^1.6.0
+  googleapis: ^13.1.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +36,8 @@ flutter:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
     - assets/images/app_icon.png
+    - assets/oedsted-festival-app-b6f1e9ca4bdb.json
+    - .env
 
 flutter_launcher_icons:
   android: "launcher_icon"
