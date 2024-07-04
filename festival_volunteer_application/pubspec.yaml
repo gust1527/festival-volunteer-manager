@@ -36,8 +36,6 @@ flutter:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
     - assets/images/app_icon.png
-    - assets/oedsted-festival-app-b6f1e9ca4bdb.json
-    - .env
 
 flutter_launcher_icons:
   android: "launcher_icon"

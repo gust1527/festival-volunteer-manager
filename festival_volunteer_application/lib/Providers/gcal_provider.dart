@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class GCALProvider {
   final String apiKey;
 
-  GCALProvider() : apiKey = dotenv.env['GOOGLE_API_KEY']!;
+  GCALProvider() : apiKey = 'AIzaSyAzDqolb5p9WWThSeTnfET8LI6pEttpxd4';
 
   Future<List<calendar.Event>> getFutureEvents(String calendarId) async {
     var now = DateTime.now().toUtc();

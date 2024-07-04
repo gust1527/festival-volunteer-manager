@@ -11,7 +11,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await dotenv.load(fileName: ".env");
   initializeDateFormatting('da_DK');
   runApp(const MainApp());
 }
