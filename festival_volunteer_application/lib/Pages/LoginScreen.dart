@@ -10,7 +10,8 @@ import '../Utility/UserHandler.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final dbProvider = DBProvider();
+  final _db_provider = DBProvider();
+  final _auth_provider = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
         print('User email: ${user.email}');
         print('User display name: ${user.displayName}');
         // Get the user
-        Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user);
+        Future<FestivalGuest> festivalGuest = _db_provider.getFestivalGuest(user);
         festivalGuest.then((currentUserSnapshot) {
           UserHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
@@ -33,6 +34,8 @@ class LoginScreen extends StatelessWidget {
             Navigator.pushNamed(context, '/link-ticket');
           }
         });
+      } else if (UserHandler().user != null) {
+          Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
       }
     });
 
@@ -52,17 +55,18 @@ class LoginScreen extends StatelessWidget {
                 text: 'Log ind med Google',
                 icon: FontAwesomeIcons.google,
                 color: Colors.grey,
-                loginMethod: AuthService().googleLogin,
+                loginMethod: _auth_provider.googleLogin,
               ),
             ),
-            const Flexible(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Link din email med din billet',
-                ),
+            Flexible(
+              child: LoginButton(
+                text: 'Log ind med email og ordre ID',
+                icon: FontAwesomeIcons.envelope,
+                color: Colors.grey,
+                loginMethod: () {
+                },
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -39,6 +39,25 @@ class AuthService {
     }
   }
 
+  // login with email and order id
+  Future<void> loginWithEmail(String email, String orderId) async {
+    try {
+      // Get the user document from the database using the provided email and order id
+      final userDoc = await DBProvider().getUserByEmailAndOrderId(email, orderId);
+
+      if (userDoc == null) {
+        // User not found in the database
+        throw Exception("User not found");
+      }
+
+      // Sign in the user with the retrieved user document
+      await FirebaseAuth.instance.signInAnonymously();
+    } catch (e) {
+      print(e.toString());
+      throw Exception("Login failed");
+    }
+  }
+
   // Get user
   Future<User?> getUser() async {
     return _auth.currentUser;

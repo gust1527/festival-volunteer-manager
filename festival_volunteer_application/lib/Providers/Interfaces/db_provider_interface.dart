@@ -11,4 +11,6 @@ abstract class DBProviderInterface {
   Future<FestivalGuest> getFestivalGuest(User user);
 
   Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name);
+
+  Future<User> getUserByEmailAndOrderId(String email, String orderId);
 }
