@@ -1,8 +1,10 @@
+import 'package:festival_volunteer_application/Pages/MusicPage/Artists.dart';
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:festival_volunteer_application/Providers/gcal_provider.dart';
+import 'package:googleapis/calendar/v3.dart';
 import 'package:intl/intl.dart';
 
 class MusicPage extends StatefulWidget {
@@ -39,17 +41,14 @@ class _MusicPageState extends State<MusicPage> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                var event = snapshot.data![index];
-                var startTime = event.start?.dateTime?.toLocal() ?? DateTime.now();
+                Event event = snapshot.data![index];
+                DateTime startTime = event.start?.dateTime?.toLocal() ?? DateTime.now();
                 // Fetch the start time of the first event
                 String formattedTime = DateFormat('HH:mm').format(startTime);
+                var artistName = event.summary ?? 'Intet artistnavn fundet';
+                Artist artist = Artist(name: artistName, time: startTime);
 
-                var eventSummary = event.summary ?? 'Intet artistnavn fundet';
-
-                return ListTile(
-                  title: Text(eventSummary),
-                  subtitle: Text('Næste artist: $eventSummary @ $formattedTime'),
-                );
+                return ArtistWidget(artist);
               },
             );
           }

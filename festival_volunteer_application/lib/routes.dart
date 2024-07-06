@@ -2,7 +2,7 @@ import 'package:festival_volunteer_application/Pages/FoodAndBeveragesPage.dart';
 import 'package:festival_volunteer_application/Pages/HomeScreen.dart';
 import 'package:festival_volunteer_application/Pages/LinkTicket.dart';
 import 'package:festival_volunteer_application/Pages/LoginScreen.dart';
-import 'package:festival_volunteer_application/Pages/MusicPage.dart';
+import 'package:festival_volunteer_application/Pages/MusicPage/MusicPage.dart';
 import 'package:festival_volunteer_application/Pages/TjansePage.dart';
 import 'package:festival_volunteer_application/Pages/InformationPage.dart';
 
