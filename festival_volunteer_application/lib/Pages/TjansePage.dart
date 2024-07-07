@@ -42,17 +42,8 @@ class _TjansePageState extends State<TjansePage> {
                 } else {
                   Tjans tjans = snapshot.requireData;
 
-                  // Convert the timestamp from Tjans to usable date format
-                  DateTime dateTime = snapshot.requireData.time.toDate();
-
-                  String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime);
-
                   return TjansTile(
-                    tjanseNavn: tjans.name,
-                    tjanseKortBeskrivelse: tjans.shortDescription,
-                    tjanseLangBeskrivelse: {},
-                    tjansePlacering: tjans.location,
-                    tjanseTidspunkt: formattedTime,
+                    currentTjans: tjans,
                     route: "/tjanser",
                   );
                 }

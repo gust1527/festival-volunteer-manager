@@ -8,10 +8,10 @@ class Tjans {
   final Timestamp time;
   final String location;
   final String shortDescription;
-  final TjansLangBeskrivelse longDescription;
+  final String longDescriptionPath;
 
   Tjans(this.name, this.time, this.location,
-      this.shortDescription, this.longDescription);
+      this.shortDescription, this.longDescriptionPath);
 
 
 }
