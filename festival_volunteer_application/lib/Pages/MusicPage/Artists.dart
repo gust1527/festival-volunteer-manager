@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/chat/v1.dart';
+import 'package:intl/intl.dart';
 
 class ArtistWidget extends StatefulWidget {
   final Artist artist;
@@ -14,39 +14,49 @@ class ArtistWidget extends StatefulWidget {
 class _ArtistWidgetState extends State<ArtistWidget> {
   late String imagePath;
   late Widget artistImage;
-  late String weekday;
+  late String formattedTime;
 
   @override
   void initState() {
     super.initState();
     imagePath = _getImagePath(widget.artist.name);
-    weekday = _getWeekday(widget.artist.time.weekday);
+    formattedTime = _getFormattedTime(widget.artist.time);
   }
 
   String _getImagePath(String artistName) {
     switch (artistName.toLowerCase()) {
       case "aphaca":
-        return 'assets/images/Aphaca.jpg';
+        return 'images/Aphaca.jpg';
       case "storebjerg":
-        return 'assets/images/Storebjerg.png';
+        return 'images/Storebjerg.png';
       case "aysay":
-        return 'assets/images/Aysay.jpg';
+        return 'images/Aysay.jpg';
       case "døtre":
-        return 'assets/images/Døtre.png';
+        return 'images/Døtre.png';
       case "elsked":
-        return 'assets/images/Elsked.jpg';
+        return 'images/Elsked.jpg';
       case "iiris":
-        return 'assets/images/Iiris.png';
+        return 'images/Iiris.png';
       case "pradanøia":
-        return 'assets/images/Pradanøia.jpg';
+        return 'assets/images/PRADANØIE_COVER.jpg';
       case "tigeroak":
-        return 'assets/images/Tigeroak.png';
+        return 'images/Tigeroak.png';
       default:
-        return 'assets/images/BilledeKommerSnart.png';
+        return 'assets/images/BilledeKommerSnart.jpg';
     }
   }
 
-  String _getWeekday(int weekday) {
+  String _getFormattedTime(DateTime artistTime) {
+    // Extract weekday from DateTime object
+    String convertedTime = DateFormat('EEEE @ HH:mm', 'da_DK').format(artistTime);
+
+    // Capitalize the first letter
+    convertedTime = convertedTime.substring(0, 1).toUpperCase() + convertedTime.substring(1);
+    
+    // Return the first three letters of the weekday
+    return convertedTime;
+
+    /*
     switch (weekday) {
       case 1:
         return "Man";
@@ -65,16 +75,19 @@ class _ArtistWidgetState extends State<ArtistWidget> {
       default:
         return "Fejl";
     }
+
+*/
+
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget image = Image.from(image: AssetImage(imagePath));
+    Widget image = Image.asset(imagePath);
     return ListTile(
       leading: image,
       title: Text(widget.artist.name),
       subtitle: Text(
-          "$weekday @ ${widget.artist.time.hour.toString().padLeft(2, '0')}:${widget.artist.time.minute.toString().padLeft(2, '0')}"),
+          formattedTime),
       trailing: IconButton(
         icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
         onPressed: () => setState(() {

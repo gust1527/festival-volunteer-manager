@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/
+    - assets/images/PRADANØIE_COVER.jpg
 
 flutter_launcher_icons:
   android: "launcher_icon"
