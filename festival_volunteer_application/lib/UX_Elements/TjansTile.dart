@@ -30,16 +30,25 @@ class TjansTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
           onTap: () {
-            // Get the long_description from the DB provider
-            DBProvider().getTjansLangBeskrivelse(currentTjans.longDescriptionPath).then((TjansLangBeskrivelse tjanseLangBeskrivelse) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TjansDescriptionPage(
-                    tjansLangBeskrivelse: tjanseLangBeskrivelse,),
+            // Get the long_description from the DB provider if the path is not empty
+            if (currentTjans.longDescriptionPath.isNotEmpty) {
+              DBProvider().getTjansLangBeskrivelse(currentTjans.longDescriptionPath).then((TjansLangBeskrivelse tjanseLangBeskrivelse) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TjansDescriptionPage(
+                      tjansLangBeskrivelse: tjanseLangBeskrivelse,),
+                  ),
+                );
+              });
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Der er ingen beskrivelse til denne tjans'),
+                  duration: Durations.long1,
                 ),
               );
-            });
+            }
           },
         child: Column(
           mainAxisSize: MainAxisSize.max,
