@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/chat/v1.dart';
+//import 'package:googleapis/chat/v1.dart';
 
 class ArtistWidget extends StatefulWidget {
   final Artist artist;
@@ -69,7 +69,7 @@ class _ArtistWidgetState extends State<ArtistWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget image = Image.from(image: AssetImage(imagePath));
+    Widget image = Image(image: AssetImage(imagePath));
     return ListTile(
       leading: image,
       title: Text(widget.artist.name),
