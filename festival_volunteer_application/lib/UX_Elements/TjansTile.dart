@@ -32,19 +32,29 @@ class TjansTile extends StatelessWidget {
           onTap: () {
             // Get the long_description from the DB provider if the path is not empty
             if (currentTjans.longDescriptionPath.isNotEmpty) {
-              DBProvider().getTjansLangBeskrivelse(currentTjans.longDescriptionPath).then((TjansLangBeskrivelse tjanseLangBeskrivelse) {
+              DBProvider().getTjansLangBeskrivelse(currentTjans.longDescriptionPath).then((TjansLangBeskrivelse? tjanseLangBeskrivelse) {
+              if (tjanseLangBeskrivelse != null) {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TjansDescriptionPage(
-                      tjansLangBeskrivelse: tjanseLangBeskrivelse,),
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TjansDescriptionPage(
+                  tjansLangBeskrivelse: tjanseLangBeskrivelse,
                   ),
+                ),
                 );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Der er ingen beskrivelse til denne tjans endnu'),
+                  duration: Durations.long1,
+                ),
+                );
+              }
               });
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Der er ingen beskrivelse til denne tjans'),
+                  content: Text('Der er ingen beskrivelse til denne tjans endnu'),
                   duration: Durations.long1,
                 ),
               );

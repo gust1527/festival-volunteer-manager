@@ -72,7 +72,7 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
     }
   }
 
-  Future<TjansLangBeskrivelse> getTjansLangBeskrivelse(String path) async {
+  Future<TjansLangBeskrivelse?> getTjansLangBeskrivelse(String path) async {
     try {
       final langBeskrivelseDoc = await _db.doc(path).get();
       if (langBeskrivelseDoc.exists) {
@@ -87,7 +87,7 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
           tjanseWhere: langBeskrivelseData['tjanse_where'],
         );
       } else {
-        throw Exception('Tjans lang beskrivelse not found');
+        return null;
       }
     } catch (error) {
       throw Exception('Could not get tjans lang beskrivelse: $error');
