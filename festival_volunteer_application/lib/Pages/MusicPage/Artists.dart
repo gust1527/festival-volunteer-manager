@@ -26,17 +26,17 @@ class _ArtistWidgetState extends State<ArtistWidget> {
   String _getImagePath(String artistName) {
     switch (artistName.toLowerCase()) {
       case "aphaca":
-        return 'images/Aphaca.jpg';
+        return 'assets/images/Aphaca.jpg';
       case "storebjerg":
-        return 'images/Storebjerg.png';
+        return 'assets/images/Storebjerg.png';
       case "aysay":
-        return 'images/Aysay.jpg';
+        return 'assets/images/Aysay.jpg';
       case "døtre":
-        return 'images/Døtre.png';
+        return 'assets/images/Døtre.png';
       case "elsked":
-        return 'images/Elsked.jpg';
+        return 'assets/images/Elsked.jpg';
       case "iiris":
-        return 'images/Iiris.png';
+        return 'assets/images/Iiris.png';
       case "pradanøia":
         return 'assets/images/Pradanøia.jpg';
       case "tigeroak":
