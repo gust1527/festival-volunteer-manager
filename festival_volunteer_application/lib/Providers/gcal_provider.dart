@@ -1,4 +1,5 @@
 import 'dart:convert';
+<<<<<<< HEAD
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:googleapis_auth/auth_io.dart';
@@ -36,13 +37,40 @@ class GCALProvider {
       singleEvents: true,
       orderBy: 'startTime',
     );
+=======
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:googleapis/calendar/v3.dart' as calendar;
+import 'package:http/http.dart' as http;
+
+class GCALProvider {
+  final String apiKey;
+
+  GCALProvider() : apiKey = 'AIzaSyAzDqolb5p9WWThSeTnfET8LI6pEttpxd4';
+
+  Future<List<calendar.Event>> getFutureEvents(String calendarId) async {
+    var now = DateTime.now().toUtc();
+    var url = Uri.parse(
+        'https://www.googleapis.com/calendar/v3/calendars/$calendarId/events?timeMin=${now.toIso8601String()}&singleEvents=true&orderBy=startTime&key=$apiKey');
+
+    var response = await http.get(url);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load events');
+    }
+
+    var data = json.decode(response.body);
+    var eventList = calendar.Events.fromJson(data);
+>>>>>>> main
 
     print(eventList.items);
 
     return eventList.items ?? [];
+<<<<<<< HEAD
   }
 
   void close() {
     _client?.close();
+=======
+>>>>>>> main
   }
 }

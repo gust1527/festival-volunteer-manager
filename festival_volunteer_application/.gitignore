@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .DS_Store
+
+# Dont push service account key
+assets/oedsted-festival-app-b6f1e9ca4bdb.json
+
+# Dont push env file
+.env
