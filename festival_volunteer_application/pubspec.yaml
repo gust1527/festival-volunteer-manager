@@ -36,8 +36,6 @@ flutter:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
     - assets/images/
-    - assets/images/
-    - assets/images/PRADANØIE_COVER.jpg
 
 flutter_launcher_icons:
   android: "launcher_icon"

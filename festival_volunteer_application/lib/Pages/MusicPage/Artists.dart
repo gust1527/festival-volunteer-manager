@@ -38,11 +38,11 @@ class _ArtistWidgetState extends State<ArtistWidget> {
       case "iiris":
         return 'images/Iiris.png';
       case "pradanøia":
-        return 'assets/images/PRADANØIE_COVER.jpg';
+        return 'assets/images/Pradanøia.jpg';
       case "tigeroak":
         return 'images/Tigeroak.png';
       default:
-        return 'assets/images/BilledeKommerSnart.jpg';
+        return 'assets/images/BilledeKommerSnart.png';
     }
   }
 
@@ -55,29 +55,6 @@ class _ArtistWidgetState extends State<ArtistWidget> {
     
     // Return the first three letters of the weekday
     return convertedTime;
-
-    /*
-    switch (weekday) {
-      case 1:
-        return "Man";
-      case 2:
-        return "Tir";
-      case 3:
-        return "Ons";
-      case 4:
-        return "Tor";
-      case 5:
-        return "Fre";
-      case 6:
-        return "Lør";
-      case 7:
-        return "Søn";
-      default:
-        return "Fejl";
-    }
-
-*/
-
   }
 
   @override
@@ -85,7 +62,12 @@ class _ArtistWidgetState extends State<ArtistWidget> {
     Widget image = Image.asset(imagePath);
     return ListTile(
       leading: image,
-      title: Text(widget.artist.name),
+      title: Text(
+          widget.artist.name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold
+          ),
+      ),
       subtitle: Text(
           formattedTime),
       trailing: IconButton(
