@@ -1,28 +1,25 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
+import 'package:festival_volunteer_application/Utility/UserHandler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   final _auth = AuthService();
   final _db = DBProvider();
-  late final FestivalGuest festivalGuest;
+  late final UserHandler _userHandler = UserHandler();
+  late final String tjanseName; // The name of the first tjanse
 
   StandardAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Get the current festivalGuest
-    User? currentUser = _auth.user!;
+    // Get the festivalGuest from the userHandler
+    final FestivalGuest festivalGuest = _userHandler.user!;
 
-    // Get the user
-    Future<FestivalGuest> festivalGuestSnapshot = _db.getFestivalGuest(currentUser);
-
-    festivalGuestSnapshot.then((snapshot) {
-      // Get the order ID from the snapshot
-      festivalGuest = FestivalGuest.fromJson(snapshot.toJson());
-    });
+    // Get the first tjans from the user
+    final Future<String> tjans = festivalGuest.tjanser[0].then((value) => tjanseName = value.name);
 
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
@@ -70,7 +67,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Text('Navn: ${festivalGuest.firstName}'),
                       Text('Email: ${festivalGuest.eMail}'),
                       Text('Ordre-id: ${festivalGuest.orderID}'),
-                      Text('Tjans: ${festivalGuest.tjanser}'),
+                      Text('Tjans: ${tjanseName}'),
                     ],
                   ),
                   actions: [
@@ -78,7 +75,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: const Text('Log ud'),
                       onPressed: () {
                         _auth.signOut();
-                        Navigator.of(context).pushNamed('/login');
+                        Navigator.of(context).pushNamedAndRemoveUntil('/login', ((route) => false));
                       },
                     ),
                     TextButton(
