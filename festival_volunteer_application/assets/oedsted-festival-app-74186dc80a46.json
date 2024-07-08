@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "oedsted-festival-app",
+  "private_key_id": "74186dc80a465fc60c74a141f17bab03a9346235",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTBlLg0AAesUpk\n2STyTCz2escnSZXvLXxOZKJwsywFEq/O3EVhFKn2ZodefS+La1ywDDIofAn3Iws7\nJCQakR9Kz+dFYeQCUvLd2PzBAmm2Z03dQ/X3Yi5K62ic7Qnf5kbuvfaOdNaGJ46x\nJun6hH2HFsIDVVHJtl1sqkVnoSs49JaJ/5kdmm13kw9vWFYGYqLPJVrLd1p3Rc1v\n6bW9rHTVOgmfFXqBuRM4313pReORP87fTZFeq0QXizLSnteI0BzgovES/Nwo+VNa\nWDPjpwgE//dmYgykhJn7/UdrECvS2fQ6nm2ZorooelyYpT8nfSsSjVFM8w+Dm2Kr\nZ1cXIebtAgMBAAECggEAB+zQn39IRd7QJa3vAIeCV8ZgJNZTYm5hoPsQC6367PzY\n6+qjU2RIhseudUq7xp9jVXw7xP/1itm+0fuHPJUvKOraa2Vj//9X/iNoSKJb0H0c\nND9ZZS9DgE5LeTtAt+8owk4RjKOQK+0f44DL4DvqD/D3m9LwNaRa6VoSrbPkkOiz\nH3WNOZ+hDnfBX92oV2n06cq1d7bUrIfD+71q7kl3TkSDnKWy323K+0+J82Ayz5SG\n/uQPRYBkNWBleFmvCCQ6dG476uXMaL77NVzSZrFYdx1dbQM6k53+P6jEBEH9wBAs\nQ+WoqqeJCznm8mV86ETxqb4+5x5sE9QGu/H/pmNlmQKBgQD5Q+Vok34x0beml5EY\nE9/LAFabXl9WlmvcI30Ndz8fT3YoR3VSIs3hDPGMGohugYDDNb7g7E36iHQ8dcMq\nttfCcPxX0gWZEBq6MrnDK9W9l0+WCnGv6NoZaAHj/3n9YzxLeTuSvTmOnTzg9McL\nDTWDNu8FitAr/27QXzGZbA+LmQKBgQDYue1/SNTwnnc8eBVwBZD7CsiwJPTRk646\n4vdkTs+QXn5IWX3U40HLoXyTOiSk2iUS2QHXAL16DYFvTaFczQ3zp9LfIuJFkBQx\n/aw/GkqawYpcETdQta2VppKakf4JZumvF8azMyLPrIeZgzcGO4b66wwyFNgcDADT\n7q3C1CAqdQKBgQC9nbafzMNMppor8lR/mm69gC5h1nJz7c1zEtQIMFQmP05E6ccH\nik5PCoec6noqhf0rgnEHrPrMwIybiYHDtn9+/HAZZjy36RZL2laRb4ESzk3Od3dw\nN5Phi8sUY72q0ZiGWVzGDYgBQv+SqOHZOF0iyeEduDEPpynm/ONAMIHK0QKBgDc7\nexlbOFlyKTUR7XS1FnPEFc0+Pd5DYr3DJgU8SI2kZ06M8BKXMCdzKkpjIP+aUKRz\nBZMDr0YxtvDkueDqqUmVVZpkS4Iq69qpqYITczvpYxd/k7dP9cMTxnz6A+HlhlyH\nFK6Ks651a8FlvVorRYUg7eS9hy3uqS9ZvpLOeLwZAoGBAPVpSOfFPXm7Xmzmi2d+\nsaamJpUPaJ4WmLvLjjJDl8LSeWDjGvUNCQ3NoXkJ/V5Fa0yE22Nl0UYwS7/Rwloy\ncrYsmHMfiIxAKbpxGKoz6/3Yvsie2AVHZNu/NMlLYBxh8NnWLKa5WlT5Y9s1TUY1\n63YuHFRYaM6er48vxRAKH+vh\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-calendar-service-accoun@oedsted-festival-app.iam.gserviceaccount.com",
+  "client_id": "114944972961653186231",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-calendar-service-accoun%40oedsted-festival-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

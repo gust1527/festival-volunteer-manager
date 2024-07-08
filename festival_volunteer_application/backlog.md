@@ -1,9 +1,12 @@
 # TODO
 
+<<<<<<< HEAD
+=======
 ### Musik
 - [In progress] få styr på tile layout
 - [lav prioritet] personlige favoriter / eget program?
 
+>>>>>>> main
 ### Tjansesystem
 - [IN PROGRESS] Lang beskrivelse indhentes
 - [OK] Tilføj lang beskrivelse til Tjans i klassen fra databasen AKA relationelle skema fungerer.
