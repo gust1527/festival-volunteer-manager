@@ -11,7 +11,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
   // Get Firestore instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-
   @override
   Future<FestivalGuest> getFestivalGuest(User user) async {
     String email = user.email!;
@@ -61,27 +60,37 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       // Get the path to the long description of the tjans
       final String tjansLongDescriptionPath = tjansData['long_description'].path;
 
-      // Get th
-      final tjanseLangBeskrivelseDoc = await _db.doc(tjansLongDescriptionPath).get();
-
-      if(tjanseLangBeskrivelseDoc.exists) {
-        // Initialize TjansLangBeskrivelse object
-        tjanseLangBeskrivelse = tjanseLangBeskrivelseDoc.data()!['description'];
-
-        print(tjanseLangBeskrivelse);
-      } else {
-        tjanseLangBeskrivelse = 'No description';
-      }
-
       return Tjans(
           tjansData['name'],
-          (tjansData['time']),
+          tjansData['time'],
           tjansData['location'],
           tjansData['short_description'],
-          TjansLangBeskrivelse(tjanseLangBeskrivelse), // Assuming long_description is stored as a path
+          tjansLongDescriptionPath, // Assuming long_description should be a String path
       );
     } else {
       throw Exception('Tjans details not found');
+    }
+  }
+
+  Future<TjansLangBeskrivelse?> getTjansLangBeskrivelse(String path) async {
+    try {
+      final langBeskrivelseDoc = await _db.doc(path).get();
+      if (langBeskrivelseDoc.exists) {
+        final langBeskrivelseData = langBeskrivelseDoc.data()!['description'];
+        return TjansLangBeskrivelse(
+          tjanseDoneWhen: langBeskrivelseData['tjanse_done_when'],
+          tjanseEquipmentReturn: langBeskrivelseData['tjanse_equipment_return'],
+          tjanseQuestionsLocation: langBeskrivelseData['tjanse_questions_location'],
+          tjanseSpecialInformation: langBeskrivelseData['tjanse_special_information'],
+          tjanseSupplies: langBeskrivelseData['tjanse_supplies'],
+          tjanseWhat: langBeskrivelseData['tjanse_what'],
+          tjanseWhere: langBeskrivelseData['tjanse_where'],
+        );
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw Exception('Could not get tjans lang beskrivelse: $error');
     }
   }
 
