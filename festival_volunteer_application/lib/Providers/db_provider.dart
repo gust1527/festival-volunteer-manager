@@ -104,4 +104,25 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
     // TODO: implement createNewFestivalGuest
     throw UnimplementedError();
   }
+  
+  @override
+  Future<User> getUserByEmailAndOrderId(String email, String orderId) {
+    try {
+      // Get the user document from the database using the provided email and order id
+      return _db.collection('festival_guests').doc(email).get().then((value) {
+      if (value.exists) {
+        // Check if the order ID matches
+        if (value.data()!['order_id'] == orderId) {
+        return FirebaseAuth.instance.currentUser!;
+        } else {
+        throw Exception("Incorrect order ID");
+        }
+      } else {
+        throw Exception("User not found");
+      }
+      });
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

@@ -39,6 +39,40 @@ class AuthService {
     }
   }
 
+  // Send sign-in link to email
+  Future<void> sendSignInEmailLink(String email) async {
+    final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
+      url: 'https://your-app.com/login?email=$email',
+      handleCodeInApp: true,
+      iOSBundleId: 'com.example.ios',
+      androidPackageName: 'com.example.android',
+      androidInstallApp: true,
+      androidMinimumVersion: '12',
+    );
+
+    try {
+      await _auth.sendSignInLinkToEmail(
+        email: email,
+        actionCodeSettings: actionCodeSettings,
+      );
+      print('Sign-in email sent');
+    } on FirebaseAuthException catch (e) {
+      print('Failed to send sign-in email: ${e.message}');
+      throw Exception('Failed to send sign-in email');
+    }
+  }
+
+  // Sign in with email link
+  Future<void> signInWithEmailLink(String email, String emailLink) async {
+    try {
+      final userCredential = await _auth.signInWithEmailLink(email: email, emailLink: emailLink);
+      print('Signed in with email link: ${userCredential.user?.email}');
+    } on FirebaseAuthException catch (e) {
+      print('Error: ${e.message}');
+      throw Exception('Sign-in with email link failed');
+    }
+  }
+
   // Get user
   Future<User?> getUser() async {
     return _auth.currentUser;
