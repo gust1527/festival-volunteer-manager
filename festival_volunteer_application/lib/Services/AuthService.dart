@@ -39,22 +39,37 @@ class AuthService {
     }
   }
 
-  // login with email and order id
-  Future<void> loginWithEmail(String email, String orderId) async {
+  // Send sign-in link to email
+  Future<void> sendSignInEmailLink(String email) async {
+    final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
+      url: 'https://your-app.com/login?email=$email',
+      handleCodeInApp: true,
+      iOSBundleId: 'com.example.ios',
+      androidPackageName: 'com.example.android',
+      androidInstallApp: true,
+      androidMinimumVersion: '12',
+    );
+
     try {
-      // Get the user document from the database using the provided email and order id
-      final userDoc = await DBProvider().getUserByEmailAndOrderId(email, orderId);
+      await _auth.sendSignInLinkToEmail(
+        email: email,
+        actionCodeSettings: actionCodeSettings,
+      );
+      print('Sign-in email sent');
+    } on FirebaseAuthException catch (e) {
+      print('Failed to send sign-in email: ${e.message}');
+      throw Exception('Failed to send sign-in email');
+    }
+  }
 
-      if (userDoc == null) {
-        // User not found in the database
-        throw Exception("User not found");
-      }
-
-      // Sign in the user with the retrieved user document
-      await FirebaseAuth.instance.signInAnonymously();
-    } catch (e) {
-      print(e.toString());
-      throw Exception("Login failed");
+  // Sign in with email link
+  Future<void> signInWithEmailLink(String email, String emailLink) async {
+    try {
+      final userCredential = await _auth.signInWithEmailLink(email: email, emailLink: emailLink);
+      print('Signed in with email link: ${userCredential.user?.email}');
+    } on FirebaseAuthException catch (e) {
+      print('Error: ${e.message}');
+      throw Exception('Sign-in with email link failed');
     }
   }
 
