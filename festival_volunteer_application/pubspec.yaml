@@ -21,10 +21,7 @@ dependencies:
   url_launcher: ^6.3.0
   googleapis_auth: ^1.6.0
   googleapis: ^13.1.0
-<<<<<<< HEAD
-=======
   flutter_dotenv: ^5.1.0
->>>>>>> main
 
 dev_dependencies:
   flutter_test:
@@ -38,13 +35,8 @@ flutter:
       fonts:
         - asset: lib/fonts/Oedsted_Festival_font.otf
   assets:
-<<<<<<< HEAD
-    - assets/images/app_icon.png
-    - assets/oedsted-festival-app-c03db84e9bf2.json
-=======
     - assets/images/app_icon.png
     - assets/images/login_screen_sticker.png
->>>>>>> main
 
 flutter_launcher_icons:
   android: "launcher_icon"
