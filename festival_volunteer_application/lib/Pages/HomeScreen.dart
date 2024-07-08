@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 FutureBuilder<List<calendar.Event>>(
-                  future: _relevantEvents,
+                  future: _musicEvents,
                   builder: (BuildContext context,
                       AsyncSnapshot<List<calendar.Event>> snapshot) {
                     if (!snapshot.hasData) {
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 FutureBuilder<List<calendar.Event>>(
-                  future: _musicEvents,
+                  future: _relevantEvents,
                   builder: (BuildContext context,
                       AsyncSnapshot<List<calendar.Event>> snapshot) {
                     if (!snapshot.hasData) {
