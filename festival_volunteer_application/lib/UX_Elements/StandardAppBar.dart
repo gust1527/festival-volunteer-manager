@@ -8,8 +8,10 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   final _auth = AuthService();
   final _db = DBProvider();
   late final FestivalGuest festivalGuest;
+  final String title;
 
-  StandardAppBar({super.key});
+  StandardAppBar({super.key}) : title = 'ØF 24';
+  StandardAppBar.withOtherTitle(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +28,10 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       iconTheme: const IconThemeData(color: Colors.white),
-      title: const Padding(
+      title:  Padding(
         padding: EdgeInsets.only(left: 10, top: 40),
         child: Text(
-          'ØF 24',
+          title,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.normal,

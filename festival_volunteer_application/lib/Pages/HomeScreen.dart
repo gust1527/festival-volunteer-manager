@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         user = event;
         if (user != null) {
           // Get the first tjans from the user
-          guestTjans = UserHandler().user!.tjanser[0];
+          guestTjans = GlobalHandler().user!.tjanser[0];
 
           // Initialize calendar events fetching
           _initializeCalendarEvents();

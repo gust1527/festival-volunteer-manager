@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         // Get the user
         Future<FestivalGuest> festivalGuest = dbProvider.getFestivalGuest(user);
         festivalGuest.then((currentUserSnapshot) {
-          UserHandler().user = currentUserSnapshot;
+          GlobalHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
           bool hasOrderID = currentUserSnapshot.orderID != 0;
           if (hasOrderID) {
