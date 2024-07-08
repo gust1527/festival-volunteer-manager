@@ -43,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pushNamed(context, '/link-ticket');
           }
         });
-      } else if (UserHandler().user != null) {
-        Navigator.pushNamedAndRemoveUntil(context, '/', ((route) => false));
+      } else {
+        print('No user logged in');
       }
     });
   }
@@ -55,10 +55,20 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
     super.dispose();
   }
+
 void _loginWithEmail() async {
   try {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
+
+    // If the email ends with @gmail.com, then the user is a Google user
+    if (email != null && email.endsWith('@gmail.com')) {
+      print('User is a Google user');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login med Google i stedet for email og password.')),
+      );
+      return;
+    }
 
     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
@@ -71,17 +81,28 @@ void _loginWithEmail() async {
     // Handle login errors
     print('User login failed: ${e.message}');
 
-    if (e.code == 'user-not-found' || e.code == 'The supplied auth credential is incorrect, malformed or has expired.') {
-      Navigator.pushNamedAndRemoveUntil(context, '/register-non-google-user', ((route) => false));
+    if (e.code == 'user-not-found' || e.message == 'The supplied auth credential is incorrect, malformed or has expired.') {
+      print('The correct code has been called!: ${e.message}');
       // Handle case where user doesn't exist
       // You may choose to show an error message or navigate to a registration screen
       print('No user found for that email.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No user found for that email.')),
+      );
+      // Navigate to registration screen
+      Navigator.pushNamed(context, '/register-non-google-user');
     } else if (e.code == 'wrong-password') {
       // Handle case where password is incorrect
       print('Wrong password provided for that user.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Wrong password provided for that user.')),
+      );
     } else {
       // Handle other errors
       print('Failed to login: ${e.message}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to login: ${e.message}')),
+      );
     }
   }
 }
@@ -95,22 +116,35 @@ void _loginWithEmail() async {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const Text(
+              'ØDSTED FESTIVAL 2024',
+              style: TextStyle(
+              fontSize: 40,
+              color: Colors.white,
+              fontFamily: 'OedstedFestival',
+              ),
+              textAlign: TextAlign.center,
+            ),
             const Flexible(
-              child: Image(image: AssetImage('assets/images/app_icon.png')),
+              child: Image(image: AssetImage('images/login_screen_sticker.png')),
             ),
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
+                fillColor: Colors.white,
+                filled: true,
+                labelStyle: TextStyle(color: Colors.black),
               ),
             ),
-            SizedBox(height: 20),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: 'Ordre ID (Password)',
                 border: OutlineInputBorder(),
+                filled: true,
+                labelStyle: TextStyle(color: Colors.black),
               ),
               obscureText: true,
             ),
@@ -119,7 +153,7 @@ void _loginWithEmail() async {
               child: LoginButton(
                 text: 'Log ind med email og password',
                 icon: FontAwesomeIcons.envelope,
-                color: Colors.grey,
+                color: Colors.white,
                 loginMethod: _loginWithEmail,
               ),
             ),
@@ -127,13 +161,14 @@ void _loginWithEmail() async {
               child: LoginButton(
                 text: 'Log ind med Google',
                 icon: FontAwesomeIcons.google,
-                color: Colors.grey,
+                color: Colors.white,
                 loginMethod: _auth_provider.googleLogin,
               ),
             ),
           ],
         ),
       ),
+      backgroundColor: const Color(0xFF4C5E49),
     );
   }
 }
