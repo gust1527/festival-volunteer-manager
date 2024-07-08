@@ -26,23 +26,23 @@ class _ArtistWidgetState extends State<ArtistWidget> {
   String _getImagePath(String artistName) {
     switch (artistName.toLowerCase()) {
       case "aphaca":
-        return 'images/Aphaca.jpg';
+        return 'assets/images/Aphaca.jpg';
       case "storebjerg":
-        return 'images/Storebjerg.png';
+        return 'assets/images/Storebjerg.png';
       case "aysay":
-        return 'images/Aysay.jpg';
+        return 'assets/images/Aysay.jpg';
       case "døtre":
-        return 'images/Døtre.png';
+        return 'assets/images/Døtre.png';
       case "elsked":
-        return 'images/Elsked.jpg';
+        return 'assets/images/Elsked.jpg';
       case "iiris":
-        return 'images/Iiris.png';
+        return 'assets/images/Iiris.png';
       case "pradanøia":
         return 'assets/images/Pradanøia.jpg';
       case "tigeroak":
-        return 'images/Tigeroak.png';
+        return 'assets/images/Tigeroak.png';
       default:
-        return 'assets/images/BilledeKommerSnart.png';
+        return 'assets/images/app_icon.png';
     }
   }
 
@@ -64,8 +64,9 @@ class _ArtistWidgetState extends State<ArtistWidget> {
       leading: image,
       title: Text(
           widget.artist.name,
-          style: TextStyle(
-            fontWeight: FontWeight.bold
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OedstedFestival'
           ),
       ),
       subtitle: Text(
@@ -76,6 +77,7 @@ class _ArtistWidgetState extends State<ArtistWidget> {
           widget.favorite = !widget.favorite;
         })
       ),
+      minVerticalPadding: 0,
     );
   }
 }
