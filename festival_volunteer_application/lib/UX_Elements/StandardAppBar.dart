@@ -33,6 +33,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 30,
             fontFamily: 'OedstedFestival',
           ),
+          textAlign: TextAlign.center,
         ),
       ),
       backgroundColor: const Color(0xFF4C5E49),

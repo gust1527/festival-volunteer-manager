@@ -165,9 +165,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Expanded(
                                 child: ExpandedDialogTile(
-                              title: 'Relevant information',
+                              title: 'Begivenheder',
                               content: snapshot.data!.isNotEmpty
-                                  ? 'Næste begivenhed: ${summary} @ ${formattedTime}'
+                                  ? '$summary @ $formattedTime'
                                   : 'Ingen kommende begivenheder',
                               route: '/information',
                             )),
