@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/images/app_icon.png
     - assets/images/login_screen_sticker.png
+    - assets/images/
 
 flutter_launcher_icons:
   android: "launcher_icon"

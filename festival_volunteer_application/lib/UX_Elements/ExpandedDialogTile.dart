@@ -19,7 +19,11 @@ class ExpandedDialogTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () => {
+          if(route == "/foodAndBeverages") {
+            const SnackBar(content: Text("Ingen information tilgængelig endnu"), duration: Duration(seconds: 10),)
+          } else {
           Navigator.pushNamed(context, route)
+          }
         },
         child: Column(
           mainAxisSize: MainAxisSize.max,
