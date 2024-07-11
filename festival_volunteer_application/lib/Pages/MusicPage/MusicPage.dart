@@ -28,31 +28,39 @@ class _MusicPageState extends State<MusicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StandardAppBar(),
-      body: FutureBuilder<List<calendar.Event>>(
-        future: _futureEvents,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Fejl: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Ingen artister fundet'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                Event event = snapshot.data![index];
-                DateTime startTime = event.start?.dateTime?.toLocal() ?? DateTime.now();
-                // Fetch the start time of the first event
-                String formattedTime = DateFormat('HH:mm').format(startTime);
-                var artistName = event.summary ?? 'Intet artistnavn fundet';
-                Artist artist = Artist(name: artistName, time: startTime);
-
-                return ArtistWidget(artist);
-              },
-            );
-          }
-        },
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/app_backdrop_V1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: FutureBuilder<List<calendar.Event>>(
+          future: _futureEvents,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Fejl: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('Ingen artister fundet'));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  Event event = snapshot.data![index];
+                  DateTime startTime = event.start?.dateTime?.toLocal() ?? DateTime.now();
+                  // Fetch the start time of the first event
+                  String formattedTime = DateFormat('HH:mm').format(startTime);
+                  var artistName = event.summary ?? 'Intet artistnavn fundet';
+                  Artist artist = Artist(name: artistName, time: startTime);
+        
+                  return ArtistWidget(artist);
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }

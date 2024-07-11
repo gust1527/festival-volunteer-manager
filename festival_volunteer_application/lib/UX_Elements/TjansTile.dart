@@ -25,7 +25,8 @@ class TjansTile extends StatelessWidget {
     String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime.toDate());
 
     return Card(
-      color: Colors.grey[300],
+      color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+      shadowColor: Colors.black,
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(

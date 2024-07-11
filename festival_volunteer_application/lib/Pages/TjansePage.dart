@@ -30,27 +30,35 @@ class _TjansePageState extends State<TjansePage> {
 
     return Scaffold(
       appBar: StandardAppBar(),
-      body: Column(
-        children: List.generate(tjanser.length, (index) {
-          return Expanded(
-            flex: 1,
-            child: FutureBuilder(
-              future: tjanser[index],
-              builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  Tjans tjans = snapshot.requireData;
-
-                  return TjansTile(
-                    currentTjans: tjans,
-                    route: "/tjanser",
-                  );
-                }
-              },
-            ),
-          );
-        }),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/app_backdrop_V1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: List.generate(tjanser.length, (index) {
+            return Expanded(
+              flex: 1,
+              child: FutureBuilder(
+                future: tjanser[index],
+                builder: (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    Tjans tjans = snapshot.requireData;
+        
+                    return TjansTile(
+                      currentTjans: tjans,
+                      route: "/tjanser",
+                    );
+                  }
+                },
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

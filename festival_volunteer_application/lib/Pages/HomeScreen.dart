@@ -58,136 +58,144 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StandardAppBar(),
-      body: user == null
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: <Widget>[
-                FutureBuilder<Tjans>(
-                  future: guestTjans,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      try {
-                        DateTime dateTime = snapshot.requireData.time.toDate();
-                        String formattedTime =
-                            DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK')
-                                .format(dateTime);
-                        return Expanded(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/app_backdrop_V1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: user == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: <Widget>[
+                  FutureBuilder<Tjans>(
+                    future: guestTjans,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        try {
+                          DateTime dateTime = snapshot.requireData.time.toDate();
+                          String formattedTime =
+                              DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK')
+                                  .format(dateTime);
+                          return Expanded(
+                              flex: 1,
+                              child: ExpandedDialogTile(
+                                title: 'Din tjans',
+                                content:
+                                    'Du har fået tjansen "${snapshot.requireData.name}", som indebærer at "${snapshot.requireData.shortDescription}". Du skal møde til tjansen "$formattedTime"',
+                                route: '/tjanser',
+                              ));
+                        } catch (e) {
+                          return const Center(child: Text('Error loading tjans'));
+                        }
+                      }
+                    },
+                  ),
+                  FutureBuilder<List<calendar.Event>>(
+                    future: _musicEvents,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<calendar.Event>> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Text(
+                                'No calendar data found for activities events: ${snapshot.error}'));
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        try {
+                          // Fetch the first event from the list
+                          calendar.Event firstMusicEvent = snapshot.data!.first;
+        
+                          // Fetch the start time of the first event
+                          DateTime startTime =
+                              firstMusicEvent.start?.dateTime?.toLocal() ??
+                                  DateTime.now();
+                          String formattedTime =
+                              DateFormat('HH:mm').format(startTime);
+        
+                          // Fetch the summary of the first event
+                          String summary = firstMusicEvent.summary ??
+                              'Ingen kommende artister';
+        
+                          return Expanded(
                             flex: 1,
                             child: ExpandedDialogTile(
-                              title: 'Din tjans',
-                              content:
-                                  'Du har fået tjansen "${snapshot.requireData.name}", som indebærer at "${snapshot.requireData.shortDescription}". Du skal møde til tjansen "$formattedTime"',
-                              route: '/tjanser',
-                            ));
-                      } catch (e) {
-                        return const Center(child: Text('Error loading tjans'));
-                      }
-                    }
-                  },
-                ),
-                FutureBuilder<List<calendar.Event>>(
-                  future: _musicEvents,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<calendar.Event>> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                          child: Text(
-                              'No calendar data found for activities events: ${snapshot.error}'));
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      try {
-                        // Fetch the first event from the list
-                        calendar.Event firstMusicEvent = snapshot.data!.first;
-
-                        // Fetch the start time of the first event
-                        DateTime startTime =
-                            firstMusicEvent.start?.dateTime?.toLocal() ??
-                                DateTime.now();
-                        String formattedTime =
-                            DateFormat('HH:mm').format(startTime);
-
-                        // Fetch the summary of the first event
-                        String summary = firstMusicEvent.summary ??
-                            'Ingen kommende artister';
-
-                        return Expanded(
-                          flex: 1,
-                          child: ExpandedDialogTile(
-                            title: 'Musik program',
-                            content: snapshot.data!.isNotEmpty
-                                ? 'Næste artist: ${summary} @ ${formattedTime}'
-                                : 'Ingen kommende artister',
-                            route: '/music',
-                          ),
-                        );
-                      } catch (e) {
-                        return const Center(
-                            child: Text('Error loading relevant information'));
-                      }
-                    }
-                  },
-                ),
-                FutureBuilder<List<calendar.Event>>(
-                  future: _relevantEvents,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<calendar.Event>> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                          child: Text(
-                              'No calendar data found for music events: ${snapshot.error}'));
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      try {
-                        // Fetch the first event from the list
-                        calendar.Event firstEvent = snapshot.data!.first;
-
-                        // Fetch the start time of the first event
-                        DateTime startTime =
-                            firstEvent.start?.dateTime?.toLocal() ??
-                                DateTime.now();
-                        String formattedTime =
-                            DateFormat('HH:mm').format(startTime);
-
-                        // Fetch the summary of the first event
-                        String summary =
-                            firstEvent.summary ?? 'Ingen kommende begivenheder';
-                        return Expanded(
-                            child: Row(
-                          children: <Widget>[
-                            Expanded(
-                                child: ExpandedDialogTile(
-                              title: 'Begivenheder',
+                              title: 'Musik program',
                               content: snapshot.data!.isNotEmpty
-                                  ? '$summary @ $formattedTime'
-                                  : 'Ingen kommende begivenheder',
-                              route: '/information',
-                            )),
-                            const Expanded(
-                                child: ExpandedDialogTile(
-                              title: 'Madboder',
-                              content: 'Ingen information tilgængelig',
-                              route: '/foodAndBeverages',
-                            )),
-                          ],
-                        ));
-                      } catch (e) {
-                        return const Center(
-                            child: Text('Error loading music program'));
+                                  ? 'Næste artist: ${summary} kl. ${formattedTime}'
+                                  : 'Ingen kommende artister',
+                              route: '/music',
+                            ),
+                          );
+                        } catch (e) {
+                          return const Center(
+                              child: Text('Error loading relevant information'));
+                        }
                       }
-                    }
-                  },
-                ),
-              ],
-            ),
+                    },
+                  ),
+                  FutureBuilder<List<calendar.Event>>(
+                    future: _relevantEvents,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<calendar.Event>> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Text(
+                                'No calendar data found for music events: ${snapshot.error}'));
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        try {
+                          // Fetch the first event from the list
+                          calendar.Event firstEvent = snapshot.data!.first;
+        
+                          // Fetch the start time of the first event
+                          DateTime startTime =
+                              firstEvent.start?.dateTime?.toLocal() ??
+                                  DateTime.now();
+                          String formattedTime =
+                              DateFormat('HH:mm').format(startTime);
+        
+                          // Fetch the summary of the first event
+                          String summary = firstEvent.summary ?? 'Ingen kommende begivenheder';
+                          
+                          return Expanded(
+                              child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: ExpandedDialogTile(
+                                title: 'Begivenheder',
+                                content: snapshot.data!.isNotEmpty
+                                    ? 'Næste begivenhed: $summary kl. $formattedTime'
+                                    : 'Ingen kommende begivenheder',
+                                route: '/information',
+                              )),
+                              const Expanded(
+                                  child: ExpandedDialogTile(
+                                title: 'Madboder',
+                                content: 'Ingen information tilgængelig',
+                                route: '/foodAndBeverages',
+                              )),
+                            ],
+                          ));
+                        } catch (e) {
+                          return const Center(
+                              child: Text('Error loading music program'));
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }

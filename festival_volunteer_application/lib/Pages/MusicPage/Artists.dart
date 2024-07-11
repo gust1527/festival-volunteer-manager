@@ -48,7 +48,7 @@ class _ArtistWidgetState extends State<ArtistWidget> {
 
   String _getFormattedTime(DateTime artistTime) {
     // Extract weekday from DateTime object
-    String convertedTime = DateFormat('EEEE @ HH:mm', 'da_DK').format(artistTime);
+    String convertedTime = DateFormat('EEEE HH:mm', 'da_DK').format(artistTime);
 
     // Capitalize the first letter
     convertedTime = convertedTime.substring(0, 1).toUpperCase() + convertedTime.substring(1);
@@ -60,24 +60,32 @@ class _ArtistWidgetState extends State<ArtistWidget> {
   @override
   Widget build(BuildContext context) {
     Widget image = Image.asset(imagePath);
-    return ListTile(
-      leading: image,
-      title: Text(
-          widget.artist.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OedstedFestival'
-          ),
+    return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+        shadowColor: Colors.black,
+        child: ListTile(
+        leading: image,
+        title: Text(
+            '${widget.artist.name}, $formattedTime' ,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OedstedFestival'
+            ),
+        ),
+        subtitle: const Text(
+          '',
+        ),
+        trailing: IconButton(
+          icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
+          onPressed: () => setState(() {
+            widget.favorite = !widget.favorite;
+          })
+        ),
+        minVerticalPadding: 0,
       ),
-      subtitle: Text(
-          formattedTime),
-      trailing: IconButton(
-        icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
-        onPressed: () => setState(() {
-          widget.favorite = !widget.favorite;
-        })
-      ),
-      minVerticalPadding: 0,
     );
   }
 }

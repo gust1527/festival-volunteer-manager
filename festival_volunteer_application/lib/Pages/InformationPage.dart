@@ -28,44 +28,70 @@ class _InformationPageState extends State<InformationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StandardAppBar(),
-      body: FutureBuilder<List<calendar.Event>>(
-        future: _futureEvents,
-        builder: (context, snapshot) {
-          // Check if the future is still loading
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) { // Check if the future has an error
-            return Center(child: Text('Fejl: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) { // Check if the future has no data
-            return const Center(child: Text('Ingen begivenheder fundet'));
-          } else { // If the future has data
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var event = snapshot.data![index];
-                var startTime =
-                    event.start?.dateTime?.toLocal() ?? DateTime.now();
-                // Fetch the start time of the event
-                String formattedTime = _getFormattedTime(startTime);
-
-                // Fetch the summary of the event
-                var eventSummary =
-                    event.summary ?? 'Intet begivenhedsnavn fundet';
-
-                // Return a ListTile with the event summary and the formatted time
-                return ListTile(
-                  title: Text(
-                    eventSummary,
-                    style: const TextStyle(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/app_backdrop_V1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: FutureBuilder<List<calendar.Event>>(
+          future: _futureEvents,
+          builder: (context, snapshot) {
+            // Check if the future is still loading
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) { // Check if the future has an error
+              return Center(child: Text('Fejl: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) { // Check if the future has no data
+              return const Center(child: Text('Ingen begivenheder fundet'));
+            } else { // If the future has data
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  var event = snapshot.data![index];
+                  var startTime =
+                      event.start?.dateTime?.toLocal() ?? DateTime.now();
+                  // Fetch the start time of the event
+                  String formattedTime = _getFormattedTime(startTime);
+        
+                  // Fetch the summary of the event
+                  String eventSummary = event.summary ?? 'Intet begivenhedsnavn fundet';
+        
+                  // Get the event description
+                  String eventDescription = event.description ?? 'Ingen beskrivelse';
+        
+                  // Return a ListTile with the event summary, description, and the formatted time
+                    return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+                    shadowColor: Colors.black,
+                    child: ListTile(
+                      title: Text(
+                      '$eventSummary, $formattedTime',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'OedstedFestival'),
-                  ),
-                  subtitle: Text(formattedTime),
-                );
-              },
-            );
-          }
-        },
+                        fontFamily: 'OedstedFestival',
+                      ),
+                      ),
+                      subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (eventDescription.isNotEmpty)
+                        Text(
+                          eventDescription,
+                        ),
+                      ],
+                      ),
+                    ),
+                    );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -73,7 +99,7 @@ class _InformationPageState extends State<InformationPage> {
 
 String _getFormattedTime(DateTime artistTime) {
   // Extract weekday from DateTime object
-  String convertedTime = DateFormat('EEEE @ HH:mm', 'da_DK').format(artistTime);
+  String convertedTime = DateFormat('EEEE HH:mm', 'da_DK').format(artistTime);
 
   // Capitalize the first letter
   convertedTime =
