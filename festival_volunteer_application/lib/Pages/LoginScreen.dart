@@ -123,15 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text(
-                'ØDSTED FESTIVAL 2024',
-                style: TextStyle(
-                  fontSize: 80,
-                  color: Colors.black,
-                  fontFamily: 'OedstedFestival',
-                ),
-                textAlign: TextAlign.center,
-              ),
+              Image.asset('assets/images/login_screen_sticker.png', height: 200),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
