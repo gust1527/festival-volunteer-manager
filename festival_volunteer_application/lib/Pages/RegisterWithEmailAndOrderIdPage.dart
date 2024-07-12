@@ -38,50 +38,66 @@ class _RegisterWithEmailAndOrderIdPageState
         title: const Text('Login for første gang', style: TextStyle(fontSize: 20, fontFamily: 'OedstedFestival', color: Colors.white)),
         backgroundColor: const Color(0xFF4C5E49),
       ),
-      body: StreamBuilder<User?>(
-        stream: _userStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData) {
-            User? user = snapshot.data;
-            if (user != null) {
-              // User is already authenticated, navigate away
-              WidgetsBinding.instance?.addPostFrameCallback((_) {
-                _navigateToNextScreen(user);
-              });
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/app_backdrop_V1.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: StreamBuilder<User?>(
+          stream: _userStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              User? user = snapshot.data;
+              if (user != null) {
+                // User is already authenticated, navigate away
+                WidgetsBinding.instance?.addPostFrameCallback((_) {
+                  _navigateToNextScreen(user);
+                });
+                return Center(child: CircularProgressIndicator());
+              }
             }
-          }
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                      fillColor: Color.fromARGB(255, 210, 232, 198).withOpacity(0.85),
+                      filled: true,
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                SizedBox(height: 12.0),
-                TextField(
-                  controller: _orderIdController,
-                  decoration: InputDecoration(
-                    labelText: 'Order ID (Password)',
+                  SizedBox(height: 12.0),
+                  TextField(
+                    controller: _orderIdController,
+                    decoration: InputDecoration(
+                      labelText: 'Order ID (Password)',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85),
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    _registerWithEmailAndOrderId();
-                  },
-                  child: Text('Register'),
-                ),
-              ],
-            ),
-          );
-        },
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      _registerWithEmailAndOrderId();
+                    },
+                    child: Text('Registrer dig'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
       backgroundColor: const Color(0xFF4C5E49),
     );

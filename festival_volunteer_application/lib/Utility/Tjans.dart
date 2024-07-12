@@ -7,11 +7,12 @@ class Tjans {
   final String name;
   final Timestamp time;
   final String location;
+  final List<String> participants;
   final String shortDescription;
   final String longDescriptionPath;
 
   Tjans(this.name, this.time, this.location,
-      this.shortDescription, this.longDescriptionPath);
+      this.shortDescription, this.longDescriptionPath, this.participants);
 
 
 }

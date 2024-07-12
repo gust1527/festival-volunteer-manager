@@ -51,12 +51,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       // Get the tjans data from the snapshot
       final tjansData = tjansDoc.data()!;
 
-      // Initialize variable for storing the 'long tjanse description'
-      final String tjanseLangBeskrivelse;
-
-      // Print the tjans data
-      print("Tjans data: $tjansData");
-
       // Get the path to the long description of the tjans
       final String tjansLongDescriptionPath = tjansData['long_description'].path;
 
@@ -65,7 +59,8 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
           tjansData['time'],
           tjansData['location'],
           tjansData['short_description'],
-          tjansLongDescriptionPath, // Assuming long_description should be a String path
+          tjansLongDescriptionPath,
+          List<String>.from(tjansData['participants']) // Initialize participants correctly
       );
     } else {
       throw Exception('Tjans details not found');

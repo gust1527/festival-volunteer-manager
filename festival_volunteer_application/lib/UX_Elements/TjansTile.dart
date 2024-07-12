@@ -25,7 +25,7 @@ class TjansTile extends StatelessWidget {
     String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime.toDate());
 
     return Card(
-      color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+      color: const Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
       shadowColor: Colors.black,
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
@@ -39,7 +39,7 @@ class TjansTile extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => TjansDescriptionPage(
-                  tjansLangBeskrivelse: tjanseLangBeskrivelse,
+                  tjansLangBeskrivelse: tjanseLangBeskrivelse, currentTjans: currentTjans,
                   ),
                 ),
                 );
