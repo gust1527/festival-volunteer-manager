@@ -69,14 +69,14 @@ class _ArtistWidgetState extends State<ArtistWidget> {
         child: ListTile(
         leading: image,
         title: Text(
-            '${widget.artist.name}, $formattedTime' ,
+            widget.artist.name ,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontFamily: 'OedstedFestival'
             ),
         ),
-        subtitle: const Text(
-          '',
+        subtitle: Text(
+          formattedTime,
         ),
         trailing: IconButton(
           icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),

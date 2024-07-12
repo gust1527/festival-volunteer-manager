@@ -63,9 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // If the email ends with @gmail.com, then the user is a Google user
       if (email != null && email.endsWith('@gmail.com')) {
-        print('User is a Google user');
+        print('Brugeren er en Google-bruger');
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Login med Google i stedet for email og password.')),
+          const SnackBar(content: Text('Log ind med Google i stedet for email og password.')),
         );
         return;
       }
@@ -75,33 +75,31 @@ class _LoginScreenState extends State<LoginScreen> {
         password: password,
       );
 
-      // Handle successful login
-      print('User logged in: ${userCredential.user!.uid}');
     } on FirebaseAuthException catch (e) {
-      // Handle login errors
-      print('User login failed: ${e.message}');
+      // Håndter loginfejl
+      print('Brugerlogin mislykkedes: ${e.message}');
 
       if (e.code == 'user-not-found' || e.message == 'The supplied auth credential is incorrect, malformed or has expired.') {
-        print('The correct code has been called!: ${e.message}');
-        // Handle case where user doesn't exist
-        // You may choose to show an error message or navigate to a registration screen
-        print('No user found for that email.');
+        print('Den korrekte kode er blevet kaldt!: ${e.message}');
+        // Håndter tilfælde hvor brugeren ikke eksisterer
+        // Du kan vælge at vise en fejlmeddelelse eller navigere til en registreringsskærm
+        print('Ingen bruger fundet med den e-mail.');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No user found for that email.')),
+          SnackBar(content: Text('Ingen bruger fundet med denne e-mail.')),
         );
-        // Navigate to registration screen
+        // Naviger til registreringsskærmen
         Navigator.pushNamed(context, '/register-non-google-user');
       } else if (e.code == 'wrong-password') {
-        // Handle case where password is incorrect
-        print('Wrong password provided for that user.');
+        // Håndter tilfælde hvor adgangskoden er forkert
+        print('Forkert adgangskode angivet for den bruger.');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Wrong password provided for that user.')),
+          SnackBar(content: Text('Forkert adgangskode angivet for denne bruger.')),
         );
       } else {
-        // Handle other errors
-        print('Failed to login: ${e.message}');
+        // Håndter andre fejl
+        print('Fejl ved login: ${e.message}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to login: ${e.message}')),
+          SnackBar(content: Text('Fejl ved login: ${e.message}')),
         );
       }
     }
