@@ -62,7 +62,7 @@ class _ArtistWidgetState extends State<ArtistWidget> {
     Widget image = Image.asset(imagePath);
     return Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
         shadowColor: Colors.black,

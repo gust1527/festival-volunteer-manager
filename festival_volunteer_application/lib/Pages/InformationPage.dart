@@ -41,11 +41,14 @@ class _InformationPageState extends State<InformationPage> {
             // Check if the future is still loading
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) { // Check if the future has an error
+            } else if (snapshot.hasError) {
+              // Check if the future has an error
               return Center(child: Text('Fejl: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) { // Check if the future has no data
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              // Check if the future has no data
               return const Center(child: Text('Ingen begivenheder fundet'));
-            } else { // If the future has data
+            } else {
+              // If the future has data
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -54,39 +57,43 @@ class _InformationPageState extends State<InformationPage> {
                       event.start?.dateTime?.toLocal() ?? DateTime.now();
                   // Fetch the start time of the event
                   String formattedTime = _getFormattedTime(startTime);
-        
+
                   // Fetch the summary of the event
-                  String eventSummary = event.summary ?? 'Intet begivenhedsnavn fundet';
-        
+                  String eventSummary =
+                      event.summary ?? 'Intet begivenhedsnavn fundet';
+
                   // Get the event description
-                  String eventDescription = event.description ?? 'Ingen beskrivelse';
-        
+                  String eventDescription =
+                      event.description ?? 'Ingen beskrivelse';
+
                   // Return a ListTile with the event summary, description, and the formatted time
-                    return Card(
+                  return Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                    color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+                    color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(
+                        0.85), // Set the color to be somewhat transparent
                     shadowColor: Colors.black,
                     child: ListTile(
                       title: Text(
-                      '$eventSummary, $formattedTime',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'OedstedFestival',
-                      ),
+                        '$eventSummary, $formattedTime',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OedstedFestival',
+                        ),
                       ),
                       subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (eventDescription.isNotEmpty)
-                        Text(
-                          eventDescription,
-                        ),
-                      ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (eventDescription.isNotEmpty)
+                            Text(
+                              eventDescription,
+                            ),
+                        ],
                       ),
+                      minVerticalPadding: 0,
                     ),
-                    );
+                  );
                 },
               );
             }
