@@ -78,12 +78,12 @@ class _ArtistWidgetState extends State<ArtistWidget> {
         subtitle: Text(
           formattedTime,
         ),
-        trailing: IconButton(
+        /* trailing: IconButton(
           icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
           onPressed: () => setState(() {
             widget.favorite = !widget.favorite;
           })
-        ),
+        ), */
         minVerticalPadding: 0,
       ),
     );
