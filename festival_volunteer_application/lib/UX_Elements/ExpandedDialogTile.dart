@@ -14,12 +14,17 @@ class ExpandedDialogTile extends StatelessWidget {
     var fonts = GoogleFonts();
 
     return Card(
-      color: Colors.grey[300],
+      color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+      shadowColor: Colors.black,
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () => {
+          if(route == "/foodAndBeverages") {
+            const SnackBar(content: Text("Ingen information tilgængelig endnu"), duration: Duration(seconds: 10),)
+          } else {
           Navigator.pushNamed(context, route)
+          }
         },
         child: Column(
           mainAxisSize: MainAxisSize.max,

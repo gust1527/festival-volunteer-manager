@@ -20,7 +20,7 @@ class LoginButton extends StatelessWidget {
       child: ElevatedButton.icon(
         icon: Icon(
           icon,
-          color: Colors.white,
+          color: Colors.black,
           size: 20,
         ),
         style: TextButton.styleFrom(
@@ -28,7 +28,7 @@ class LoginButton extends StatelessWidget {
           backgroundColor: color,
         ),
         onPressed: () => loginMethod(),
-        label: Text(text, textAlign: TextAlign.center),
+        label: Text(text, textAlign: TextAlign.center, selectionColor: Colors.white,),
       ),
     );
   }

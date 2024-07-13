@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:googleapis/chat/v1.dart';
+import 'package:intl/intl.dart';
 
 class ArtistWidget extends StatefulWidget {
   final Artist artist;
@@ -14,13 +15,13 @@ class ArtistWidget extends StatefulWidget {
 class _ArtistWidgetState extends State<ArtistWidget> {
   late String imagePath;
   late Widget artistImage;
-  late String weekday;
+  late String formattedTime;
 
   @override
   void initState() {
     super.initState();
     imagePath = _getImagePath(widget.artist.name);
-    weekday = _getWeekday(widget.artist.time.weekday);
+    formattedTime = _getFormattedTime(widget.artist.time);
   }
 
   String _getImagePath(String artistName) {
@@ -42,44 +43,49 @@ class _ArtistWidgetState extends State<ArtistWidget> {
       case "tigeroak":
         return 'assets/images/Tigeroak.png';
       default:
-        return 'assets/images/BilledeKommerSnart.png';
+        return 'assets/images/app_icon.png';
     }
   }
 
-  String _getWeekday(int weekday) {
-    switch (weekday) {
-      case 1:
-        return "Man";
-      case 2:
-        return "Tir";
-      case 3:
-        return "Ons";
-      case 4:
-        return "Tor";
-      case 5:
-        return "Fre";
-      case 6:
-        return "Lør";
-      case 7:
-        return "Søn";
-      default:
-        return "Fejl";
-    }
+  String _getFormattedTime(DateTime artistTime) {
+    // Extract weekday from DateTime object
+    String convertedTime = DateFormat('EEEE HH:mm', 'da_DK').format(artistTime);
+
+    // Capitalize the first letter
+    convertedTime = convertedTime.substring(0, 1).toUpperCase() + convertedTime.substring(1);
+
+    // Return the first three letters of the weekday
+    return convertedTime;
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget image = Image(image: AssetImage(imagePath));
-    return ListTile(
-      leading: image,
-      title: Text(widget.artist.name),
-      subtitle: Text(
-          "$weekday @ ${widget.artist.time.hour.toString().padLeft(2, '0')}:${widget.artist.time.minute.toString().padLeft(2, '0')}"),
-      trailing: IconButton(
-        icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
-        onPressed: () => setState(() {
-          widget.favorite = !widget.favorite;
-        })
+    Widget image = Image.asset(imagePath);
+    return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+        shadowColor: Colors.black,
+        child: ListTile(
+        leading: image,
+        title: Text(
+            widget.artist.name ,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OedstedFestival'
+            ),
+        ),
+        subtitle: Text(
+          formattedTime,
+        ),
+        /* trailing: IconButton(
+          icon: Icon(widget.favorite ? Icons.favorite : Icons.favorite_border),
+          onPressed: () => setState(() {
+            widget.favorite = !widget.favorite;
+          })
+        ), */
+        minVerticalPadding: 0,
       ),
     );
   }

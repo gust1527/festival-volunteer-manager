@@ -1,39 +1,65 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/UX_Elements/TjansDescriptionPage.dart';
+import 'package:festival_volunteer_application/Utility/Tjans.dart';
+import 'package:festival_volunteer_application/Utility/TjansLangBeskrivelse.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class TjansTile extends StatelessWidget {
-  final String tjanseNavn;
-  final String tjanseKortBeskrivelse;
-  final Map<String, dynamic> tjanseLangBeskrivelse;
-  final String tjansePlacering;
-  final String tjanseTidspunkt;
+  final Tjans currentTjans;
   final String route;
 
   const TjansTile({
     Key? key,
-    required this.tjanseNavn,
-    required this.tjanseKortBeskrivelse,
-    required this.tjanseLangBeskrivelse,
-    required this.tjansePlacering,
-    required this.tjanseTidspunkt,
+    required this.currentTjans,
     required this.route,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Convert the timestamp from Tjans to usable date format
+    Timestamp dateTime = currentTjans.time;
+
+    String formattedTime = DateFormat('EEEE d. MMMM @ HH:mm', 'da_DK').format(dateTime.toDate());
+
     return Card(
-      color: Colors.grey[300],
+      color: const Color.fromARGB(255, 210, 232, 198)?.withOpacity(0.85), // Set the color to be somewhat transparent
+      shadowColor: Colors.black,
       margin: const EdgeInsets.all(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TjansDescriptionPage(jsonData: tjanseLangBeskrivelse,),
-              ),
-            );
+            // Get the long_description from the DB provider if the path is not empty
+            if (currentTjans.longDescriptionPath.isNotEmpty) {
+              DBProvider().getTjansLangBeskrivelse(currentTjans.longDescriptionPath).then((TjansLangBeskrivelse? tjanseLangBeskrivelse) {
+              if (tjanseLangBeskrivelse != null) {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TjansDescriptionPage(
+                  tjansLangBeskrivelse: tjanseLangBeskrivelse, currentTjans: currentTjans,
+                  ),
+                ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Der er ingen beskrivelse til denne tjans endnu'),
+                  duration: Durations.long1,
+                ),
+                );
+              }
+              });
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Der er ingen beskrivelse til denne tjans endnu'),
+                  duration: Durations.long1,
+                ),
+              );
+            }
           },
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -43,7 +69,7 @@ class TjansTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, left: 8.0),
                 child: Text(
-                  tjanseNavn,
+                  currentTjans.name,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -70,7 +96,7 @@ class TjansTile extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: tjanseKortBeskrivelse,
+                        text: currentTjans.shortDescription,
                         style: const TextStyle(
                           fontFamily: 'Arial',
                         ),
@@ -98,7 +124,7 @@ class TjansTile extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: tjansePlacering,
+                        text: currentTjans.location,
                         style: const TextStyle(
                           fontFamily: 'Arial',
                         ),
@@ -126,7 +152,7 @@ class TjansTile extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: tjanseTidspunkt,
+                        text: formattedTime,
                         style: const TextStyle(
                           fontFamily: 'Arial',
                         ),

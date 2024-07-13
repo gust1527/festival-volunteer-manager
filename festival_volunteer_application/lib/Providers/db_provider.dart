@@ -11,7 +11,6 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
   // Get Firestore instance
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-
   @override
   Future<FestivalGuest> getFestivalGuest(User user) async {
     String email = user.email!;
@@ -52,36 +51,41 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
       // Get the tjans data from the snapshot
       final tjansData = tjansDoc.data()!;
 
-      // Initialize variable for storing the 'long tjanse description'
-      final String tjanseLangBeskrivelse;
-
-      // Print the tjans data
-      print("Tjans data: $tjansData");
-
       // Get the path to the long description of the tjans
       final String tjansLongDescriptionPath = tjansData['long_description'].path;
 
-      // Get th
-      final tjanseLangBeskrivelseDoc = await _db.doc(tjansLongDescriptionPath).get();
-
-      if(tjanseLangBeskrivelseDoc.exists) {
-        // Initialize TjansLangBeskrivelse object
-        tjanseLangBeskrivelse = tjanseLangBeskrivelseDoc.data()!['description'];
-
-        print(tjanseLangBeskrivelse);
-      } else {
-        tjanseLangBeskrivelse = 'No description';
-      }
-
       return Tjans(
           tjansData['name'],
-          (tjansData['time']),
+          tjansData['time'],
           tjansData['location'],
           tjansData['short_description'],
-          TjansLangBeskrivelse(tjanseLangBeskrivelse), // Assuming long_description is stored as a path
+          tjansLongDescriptionPath,
+          List<String>.from(tjansData['participants']) // Initialize participants correctly
       );
     } else {
       throw Exception('Tjans details not found');
+    }
+  }
+
+  Future<TjansLangBeskrivelse?> getTjansLangBeskrivelse(String path) async {
+    try {
+      final langBeskrivelseDoc = await _db.doc(path).get();
+      if (langBeskrivelseDoc.exists) {
+        final langBeskrivelseData = langBeskrivelseDoc.data()!['description'];
+        return TjansLangBeskrivelse(
+          tjanseDoneWhen: langBeskrivelseData['tjanse_done_when'],
+          tjanseEquipmentReturn: langBeskrivelseData['tjanse_equipment_return'],
+          tjanseQuestionsLocation: langBeskrivelseData['tjanse_questions_location'],
+          tjanseSpecialInformation: langBeskrivelseData['tjanse_special_information'],
+          tjanseSupplies: langBeskrivelseData['tjanse_supplies'],
+          tjanseWhat: langBeskrivelseData['tjanse_what'],
+          tjanseWhere: langBeskrivelseData['tjanse_where'],
+        );
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw Exception('Could not get tjans lang beskrivelse: $error');
     }
   }
 
@@ -103,5 +107,26 @@ class DBProvider with ChangeNotifier implements DBProviderInterface {
   Future<FestivalGuest> createNewFestivalGuest(String id, String email, String name) {
     // TODO: implement createNewFestivalGuest
     throw UnimplementedError();
+  }
+  
+  @override
+  Future<User> getUserByEmailAndOrderId(String email, String orderId) {
+    try {
+      // Get the user document from the database using the provided email and order id
+      return _db.collection('festival_guests').doc(email).get().then((value) {
+      if (value.exists) {
+        // Check if the order ID matches
+        if (value.data()!['order_id'] == orderId) {
+        return FirebaseAuth.instance.currentUser!;
+        } else {
+        throw Exception("Incorrect order ID");
+        }
+      } else {
+        throw Exception("User not found");
+      }
+      });
+    } catch (error) {
+      rethrow;
+    }
   }
 }
