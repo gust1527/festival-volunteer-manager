@@ -174,14 +174,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: ExpandedDialogTile(
                                 title: 'Begivenheder',
                                 content: snapshot.data!.isNotEmpty
-                                    ? 'Næste begivenhed: $summary kl. $formattedTime'
+                                    ? '$summary kl. $formattedTime'
                                     : 'Ingen kommende begivenheder',
                                 route: '/information',
                               )),
                               const Expanded(
                                   child: ExpandedDialogTile(
-                                title: 'Madboder',
-                                content: 'Ingen information tilgængelig',
+                                title: 'Mad og drikke',
+                                content: '',
                                 route: '/foodAndBeverages',
                               )),
                             ],
