@@ -63,7 +63,7 @@ class TjansTile extends StatelessWidget {
           },
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          children: [
+          children: <Widget>[
             SizedBox(
               width: double.infinity, // Expand to the edge of the screen
               child: Padding(
@@ -162,6 +162,56 @@ class TjansTile extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: RichText(
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      const TextSpan(
+                        text: 'Deltagere: ',
+                        style: TextStyle(
+                          fontFamily: 'OedstedFestival',
+                        ),
+                      ),
+                      TextSpan(
+                        text: currentTjans.participants.join(', '),
+                        style: const TextStyle(
+                          fontFamily: 'Arial',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: RichText(
+                text: const TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Tryk på mig for at se en længere beskrivelse af din tjans',
+                      style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                        fontFamily: 'OedstedFestival',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           ],
         ),
       ),
