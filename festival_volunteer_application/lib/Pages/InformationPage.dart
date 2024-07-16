@@ -74,24 +74,27 @@ class _InformationPageState extends State<InformationPage> {
                     color: Color.fromARGB(255, 210, 232, 198)?.withOpacity(
                         0.85), // Set the color to be somewhat transparent
                     shadowColor: Colors.black,
-                    child: ListTile(
-                      title: Text(
-                        '$eventSummary, $formattedTime',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OedstedFestival',
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0), // Add padding here
+                      child: ListTile(
+                        title: Text(
+                          '$eventSummary, $formattedTime',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OedstedFestival',
+                          ),
                         ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (eventDescription.isNotEmpty)
+                              Text(
+                                eventDescription,
+                              ),
+                          ],
+                        ),
+                        minVerticalPadding: 0,
                       ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (eventDescription.isNotEmpty)
-                            Text(
-                              eventDescription,
-                            ),
-                        ],
-                      ),
-                      minVerticalPadding: 0,
                     ),
                   );
                 },
