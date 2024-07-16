@@ -8,7 +8,7 @@ import 'package:festival_volunteer_application/Pages/TjansePage.dart';
 import 'package:festival_volunteer_application/Pages/InformationPage.dart';
 
 var routes = {
-    '/foodAndBeverages': (context) => const FoodAndBeveragesPage(),
+    '/foodAndBeverages': (context) => FoodAndBeveragesPage(),
     '/': (context) => const HomeScreen(),
     '/information': (context) => const InformationPage(),
     '/music': (context) => const MusicPage(),
