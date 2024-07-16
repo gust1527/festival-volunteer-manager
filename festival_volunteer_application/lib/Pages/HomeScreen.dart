@@ -181,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Expanded(
                                   child: ExpandedDialogTile(
                                 title: 'Mad og drikke',
-                                content: '',
+                                content: 'Få noget i skrutten!',
                                 route: '/foodAndBeverages',
                               )),
                             ],

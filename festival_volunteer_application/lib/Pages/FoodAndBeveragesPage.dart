@@ -112,7 +112,7 @@ class FoodAndBeveragesPage extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Text(
-                        '${bev['name']}, ${bev['price']}',
+                        '- ${bev['name']}, ${bev['price']}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontFamily: 'OedstedFestival',
@@ -134,13 +134,13 @@ class FoodAndBeveragesPage extends StatelessWidget {
       {
         'name': 'Rulle med falafel',
         'description':
-            'Arabisk brød\nHomemade falafel\nSprød Spidskål\nJuicy rødkål med varme krydderier\nMarineret rødløg med sylt\nYogurt med urter\nKraftig tahin mayo',
+            '- Arabisk brød\n- Homemade falafel\n- Sprød Spidskål\n- Juicy rødkål med varme krydderier\n- Marineret rødløg med sylt\n- Yogurt med urter\n- Kraftig tahin mayo',
         'price': '70 kroner'
       },
       {
         'name': 'Bowl',
         'description':
-            'Krydret tyrkisk bulgur\nHomemade falafel\nSprød Spidskål\nJuicy rødkål med varme krydderier\nMarineret rødløg med sylt\nYogurt med urter\nKraftig Tahin mayo',
+            '- Krydret tyrkisk bulgur\n- Homemade falafel\n- Sprød Spidskål\n- Juicy rødkål med varme krydderier\n- Marineret rødløg med sylt\n- Yogurt med urter\n- Kraftig Tahin mayo',
         'price': '70 kroner'
       },
       {
@@ -179,7 +179,7 @@ class FoodAndBeveragesPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food['name']!,
+                        '${food['name']!}, ${food['price']}',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -196,15 +196,6 @@ class FoodAndBeveragesPage extends StatelessWidget {
                           ),
                         ),
                       ],
-                      const SizedBox(height: 5.0),
-                      Text(
-                        food['price']!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'OedstedFestival',
-                        ),
-                      ),
                     ],
                   ),
                 );
