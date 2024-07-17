@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         (BuildContext context, AsyncSnapshot<Tjans> snapshot) {
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.requireData.name.isEmpty || snapshot.requireData.shortDescription == 'Ingen tjans endnu' || snapshot.requireData.location == 'Derhjemme') {
+                      } else if (snapshot.requireData.name.isEmpty || snapshot.requireData.name == 'Ingen tjans' || snapshot.requireData.shortDescription == 'Ingen tjans endnu' || snapshot.requireData.location == 'Derhjemme' || snapshot.requireData.shortDescription.isEmpty) {
                         // If placeholder tjans is retrieved, then do not show anything
                         return SizedBox.shrink();
                       } else {
