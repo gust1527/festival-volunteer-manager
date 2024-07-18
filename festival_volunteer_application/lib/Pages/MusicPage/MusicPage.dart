@@ -1,5 +1,6 @@
 import 'package:festival_volunteer_application/Pages/MusicPage/Artists.dart';
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -8,7 +9,8 @@ import 'package:googleapis/calendar/v3.dart';
 import 'package:intl/intl.dart';
 
 class MusicPage extends StatefulWidget {
-  const MusicPage({super.key});
+  int dateSelected = 0;
+  MusicPage({super.key});
 
   @override
   _MusicPageState createState() => _MusicPageState();

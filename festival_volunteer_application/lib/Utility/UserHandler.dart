@@ -1,11 +1,14 @@
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
 
-class UserHandler {
+import '../Pages/MusicPage/Artists.dart';
+
+class GlobalHandler {
 
   FestivalGuest? user;
-  static final UserHandler _instance = UserHandler._internal();
-  UserHandler._internal();
-  factory UserHandler() {
+  Artist? artist;
+  static final GlobalHandler _instance = GlobalHandler._internal();
+  GlobalHandler._internal();
+  factory GlobalHandler() {
     return _instance;
   }
 

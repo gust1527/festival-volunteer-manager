@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Get the user
         Future<FestivalGuest> festivalGuest = _db_provider.getFestivalGuest(user);
         festivalGuest.then((currentUserSnapshot) {
-          UserHandler().user = currentUserSnapshot;
+          GlobalHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
           bool hasOrderID = currentUserSnapshot.orderID != 0;
           if (hasOrderID) {

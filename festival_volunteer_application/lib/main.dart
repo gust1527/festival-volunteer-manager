@@ -3,6 +3,7 @@ import 'package:festival_volunteer_application/tests.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'Pages/MusicPage/Artists.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -30,6 +31,21 @@ class MainApp extends StatefulWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/login',
         routes: routes,
+        onGenerateRoute: onGenerateRoute,
       ); 
     }
+
+  Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final Uri uri = Uri.parse(settings.name!);
+
+    if (uri.pathSegments.length == 2 && uri.pathSegments.first == 'music') {
+      final String artistName = uri.pathSegments[1];
+      return MaterialPageRoute(
+        builder: (context) => ArtistPage(),
+        settings: settings,
+      );
+    }
+    print(routes[settings.name]);
+    return MaterialPageRoute(builder: routes[settings.name]!, settings: settings);
   }
+}

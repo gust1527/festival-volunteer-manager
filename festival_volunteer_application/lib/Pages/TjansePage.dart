@@ -23,7 +23,7 @@ class _TjansePageState extends State<TjansePage> {
   Widget build(BuildContext context) {
     // Get the authenticated user
     // Get the user from the DB
-    List<Future<Tjans>> tjanser = UserHandler().user!.tjanser;
+    List<Future<Tjans>> tjanser = GlobalHandler().user!.tjanser;
 
     // Define local variable to tjans
     Future<List<Tjans>> guestTjanser;
