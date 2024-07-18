@@ -1,14 +1,14 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/Services/AuthService.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
-import 'package:festival_volunteer_application/Utility/UserHandler.dart';
+import 'package:festival_volunteer_application/Utility/GlobalHandler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
   final _auth = AuthService();
   final _db = DBProvider();
-  late final UserHandler _userHandler = UserHandler();
+  late final GlobalHandler _userHandler = GlobalHandler();
   late final String tjanseName; // The name of the first tjanse
   final String title;
 

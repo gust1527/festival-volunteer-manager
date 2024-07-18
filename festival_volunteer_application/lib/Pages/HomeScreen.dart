@@ -1,5 +1,5 @@
 import 'package:festival_volunteer_application/Providers/gcal_provider.dart';
-import 'package:festival_volunteer_application/Utility/UserHandler.dart';
+import 'package:festival_volunteer_application/Utility/GlobalHandler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';

@@ -1,6 +1,6 @@
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/Utility/FestivalGuest.dart';
-import 'package:festival_volunteer_application/Utility/UserHandler.dart';
+import 'package:festival_volunteer_application/Utility/GlobalHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -131,7 +131,7 @@ class _RegisterWithEmailAndOrderIdPageState
   void _navigateToNextScreen(User user) {
     Future<FestivalGuest> festivalGuest = _db_provider.getFestivalGuest(user);
         festivalGuest.then((currentUserSnapshot) {
-          UserHandler().user = currentUserSnapshot;
+          GlobalHandler().user = currentUserSnapshot;
           // Get the order ID from the snapshot
           bool hasOrderID = currentUserSnapshot.orderID != 0;
           if (hasOrderID) {

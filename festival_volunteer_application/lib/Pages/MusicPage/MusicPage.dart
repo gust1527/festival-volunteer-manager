@@ -55,7 +55,7 @@ class _MusicPageState extends State<MusicPage> {
                   // Fetch the start time of the first event
                   String formattedTime = DateFormat('HH:mm').format(startTime);
                   var artistName = event.summary ?? 'Intet artistnavn fundet';
-                  Artist artist = Artist(name: artistName, time: startTime);
+                  Artist artist = Artist(name: artistName, time: startTime, description: event.description ?? 'Ingen beskrivelse fundet');
         
                   return ArtistWidget(artist);
                 },

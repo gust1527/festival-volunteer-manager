@@ -1,8 +1,34 @@
 import 'package:festival_volunteer_application/UX_Elements/StandardAppBar.dart';
-import 'package:festival_volunteer_application/Utility/UserHandler.dart';
+import 'package:festival_volunteer_application/Utility/GlobalHandler.dart';
 import 'package:flutter/material.dart';
 //import 'package:googleapis/chat/v1.dart';
 import 'package:intl/intl.dart';
+
+import 'package:flutter/material.dart';
+//import 'package:googleapis/chat/v1.dart';
+import 'package:intl/intl.dart';
+
+class ArtistWidget extends StatefulWidget {
+  final Artist artist;
+  bool favorite = false;
+
+  ArtistWidget(this.artist);
+
+  @override
+  _ArtistWidgetState createState() => _ArtistWidgetState();
+}
+
+class _ArtistWidgetState extends State<ArtistWidget> {
+  late String imagePath;
+  late Widget artistImage;
+  late String formattedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    imagePath = _getImagePath(widget.artist.name);
+    formattedTime = _getFormattedTime(widget.artist.time);
+  }
 
 String _getImagePath(String artistName) {
   switch (artistName.toLowerCase()) {
@@ -67,20 +93,21 @@ String _getImagePath(String artistName) {
               })
         ), */
         minVerticalPadding: 0,
-        ),
-        ),
       onTap: () {
         GlobalHandler().artist = widget.artist;
         Navigator.pushNamed(context, "/music/${widget.artist.name}");
       },
+        ),
+        ),
     );
   }
 }
 
 class Artist {
   final String name;
+  final String description;
   final DateTime time;
-  Artist({required this.name, required this.time});
+  Artist({required this.name, required this.time, required this.description});
 }
 
 class ArtistPage extends StatelessWidget {
@@ -92,7 +119,7 @@ class ArtistPage extends StatelessWidget {
     return Scaffold(
       appBar: StandardAppBar.withOtherTitle(GlobalHandler().artist!.name),
       body: Center(
-        child: Text('Details about ${GlobalHandler().artist!.name}'),
+        child: Text(GlobalHandler().artist!.description),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:festival_volunteer_application/Utility/UserHandler.dart';
+import 'package:festival_volunteer_application/Utility/GlobalHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:festival_volunteer_application/Providers/db_provider.dart';
 import 'package:festival_volunteer_application/UX_Elements/TjansTile.dart';

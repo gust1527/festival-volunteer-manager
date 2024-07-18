@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:festival_volunteer_application/services/AuthService.dart';
 
-import '../Utility/UserHandler.dart';
+import '../Utility/GlobalHandler.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
